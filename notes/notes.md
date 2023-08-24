@@ -2,8 +2,8 @@
 
 -------------------------------------------------------------------------------------
 # To-Do's
-1. create virtual environment
-2. install dependencies
+1. create virtual environment (pipenv --python 3.8.13)
+2. install dependencies (pipenv install sqlalchemy==1.4.41 alembic ipdb faker)
     - SQLAlchemy 1.4.41
     - Alembic (migrations manager)
     - ipdb
