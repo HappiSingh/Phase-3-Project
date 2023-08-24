@@ -8,7 +8,7 @@
     - Alembic (migrations manager)
     - ipdb
     - faker (to generate fake data)
-3. create migration environment 
+3. create migration environment (in shell: alembic init migrations)
 4. to configure the migigration envirnment (alembic.ini and env.py) (batch=true)
 5. create Base
 6. Create Schema (python classes or models)
