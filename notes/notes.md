@@ -9,6 +9,7 @@
     - ipdb
     - faker (to generate fake data)
 3. create migration environment (in shell: alembic init migrations)
+(sqlite:///main.db)(render_as_batch=True)(target_metadata = Base.metadata)(from models import Base)
 4. to configure the migigration envirnment (alembic.ini and env.py) (batch=true)
 5. create Base
 6. Create Schema (python classes or models)
