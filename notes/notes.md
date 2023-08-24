@@ -20,6 +20,30 @@
 
 
 -------------------------------------------------------------------------------------
+# Migrations Notes
+
+### Generating a new migration
+
+`alembic --autogenerate -m 'name that describes updates to the schema'`
+
+### Executing a migration (upgrade)
+
+`alembic upgrade head`
+
+### Undo last migration
+
+`alembic downgrade -1`
+
+### Downgrade to revision down_id
+
+`alembic downgrade [down_id_in_migration_script_file]`
+
+### Rollback DB to the initial state
+
+`alembic downgrade base`
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 # You will need to import your own models
 from models import ModelOne, ModelTwo   
 from sqlalchemy.orm import sessionmaker
