@@ -17,8 +17,6 @@
 8. test relationships (one to many)
 9. query the data to test it 
 
-
-
 -------------------------------------------------------------------------------------
 # Migrations Notes
 
@@ -70,3 +68,4 @@ response = requests.get(API_URL)
 json_data = json.loads(response.text)
 
 -------------------------------------------------------------------------------------
+
