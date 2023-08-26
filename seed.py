@@ -38,9 +38,9 @@ gardens = [
     Garden(name="Duke Farms Community Garden", location="New Jersey", size="5,000 sqft")
 ]
 
-# session.bulk_save_objects(gardens)
+session.bulk_save_objects(gardens)
 
-# db_gardens = session.query(Garden).all()
+db_gardens = session.query(Garden).all()
 
 
 # vegetable_names = ["Carrot", "Tomato", "Cabbage", "Spinach", "Broccoli", "Okra", "Eggplant", "Cauliflower"]
