@@ -1,8 +1,8 @@
-"""Corrected ripeness constraint to nullable false
+"""Fixed repr methods for readablitiy
 
-Revision ID: f80523302acc
+Revision ID: a5f1cd267031
 Revises: 
-Create Date: 2023-08-26 04:20:00.343274
+Create Date: 2023-08-26 05:02:33.634659
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'f80523302acc'
+revision: str = 'a5f1cd267031'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

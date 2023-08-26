@@ -3,6 +3,8 @@ from sqlalchemy.orm import declarative_base, relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey
 
 Base = declarative_base()
+# import ipdb
+
 
 """
 Garden Manager 
@@ -33,8 +35,12 @@ class Garden(Base):
 
 
     def __repr__(self):
-       return f"<Garden {self.id} {self.name} {self.location} {self.size}>"
-
+       return (
+           f"<Garden: id={self.id},\n"
+           f"         name='{self.name}',\n"
+           f"         location='{self.location}',\n"
+           f"         size='{self.size}'>\n\n"
+       )
     
         
 class Vegetable(Base):
@@ -49,5 +55,10 @@ class Vegetable(Base):
 
 
     def __repr__(self):
-        return f"<Vegetable {self.id} {self.veg_name} {self.quanity} {self.ripeness}>"
+       return (
+           f"<Vegetable: id={self.id},\n"
+           f"            veg_name='{self.veg_name}',\n"
+           f"            quanity='{self.quanity}',\n"
+           f"            ripeness='{self.ripeness}'>\n\n"
+       )
     
