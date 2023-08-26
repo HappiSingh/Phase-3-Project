@@ -43,17 +43,17 @@ session.bulk_save_objects(gardens)
 db_gardens = session.query(Garden).all()
 
 
-# vegetable_names = ["Carrot", "Tomato", "Cabbage", "Spinach", "Broccoli", "Okra", "Eggplant", "Cauliflower"]
-# vegetable_ripeness = ["Not Ripe", "Almost Ripe", "Ripe", "Over-Ripe"]
+vegetable_names = ["Carrot", "Tomato", "Cabbage", "Spinach", "Broccoli", "Okra", "Eggplant", "Cauliflower"]
+vegetable_ripeness = ["Not Ripe", "Almost Ripe", "Ripe", "Over-Ripe"]
 
 
-# for garden in db_gardens:
-#     for _ in range(3):
-#         random_veg_name = random.choice(vegetable_names)
-#         random_quanity = random.randint(15,40)
-#         random_ripeness = random.choice(vegetable_ripeness)
-#         new_vegetable = Vegetable(veg_name=random_name, quanity=random_color, ripeness=garden)
-#         session.add(new_vegetable)
+for garden in db_gardens:
+    for _ in range(3):
+        random_veg_name = random.choice(vegetable_names)
+        random_quanity = random.randint(15,40)
+        random_ripeness = random.choice(vegetable_ripeness)
+        new_vegetable = Vegetable(veg_name=random_name, quanity=random_color, ripeness=garden)
+        session.add(new_vegetable)
 
 
 
