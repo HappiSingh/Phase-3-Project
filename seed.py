@@ -1,8 +1,9 @@
 from models import Garden, Vegetable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import random
 # from faker import Faker 
-import ipdb
+# import ipdb
 
 if __name__ == '__main__':
 
@@ -28,16 +29,36 @@ class Vegtables
 id: int PK
 veg name: str
 quanity: int
-ripe level: str
+ripeness: str
 Garden_id: int FK
 """
-    # doctors = [
-    #     Doctor(first_name="John", last_name="Smith", speciality="Cardiologist"),
-    #     Doctor(first_name="Andy", last_name="Adkins", speciality="Pediatrics"),
-    #     Doctor(first_name="Samantha", last_name="Urban", speciality="Dermatology")
-    # ]
+gardens = [
+    Garden(name="Greenwood Garden", location="New Jersey", size="8,000 sqft"),
+    Garden(name=" West Side Community Garden", location="New York", size="6,000 sqft"),
+    Garden(name="Duke Farms Community Garden", location="New Jersey", size="5,000 sqft")
+]
 
-ipdb.set_trace()
-   
-session.commit()
-  
+# session.bulk_save_objects(gardens)
+
+# db_gardens = session.query(Garden).all()
+
+
+# vegetable_names = ["Carrot", "Tomato", "Cabbage", "Spinach", "Broccoli", "Okra", "Eggplant", "Cauliflower"]
+# vegetable_ripeness = ["Not Ripe", "Almost Ripe", "Ripe", "Over-Ripe"]
+
+
+# for garden in db_gardens:
+#     for _ in range(3):
+#         random_veg_name = random.choice(vegetable_names)
+#         random_quanity = random.randint(15,40)
+#         random_ripeness = random.choice(vegetable_ripeness)
+#         new_vegetable = Vegetable(veg_name=random_name, quanity=random_color, ripeness=garden)
+#         session.add(new_vegetable)
+
+
+
+# session.add()
+# session.commit()
+# session.close()
+
+print("Done seeding.")

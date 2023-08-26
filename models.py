@@ -1,14 +1,10 @@
 
 from sqlalchemy.orm import declarative_base, relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey
-import ipdb
-
-ipdb.set_trace()
 
 Base = declarative_base()
 
 """
-
 Garden Manager 
 
 class Garden
@@ -33,7 +29,7 @@ class Garden(Base):
     location = Column(String, nullable=False)
     size = Column(String, nullable=False)
     
-    vegetables = relationship("Garden", backref=("gardens"))
+    vegetables = relationship("Vegetable", backref="gardens")
 
 
     def __repr__(self):
