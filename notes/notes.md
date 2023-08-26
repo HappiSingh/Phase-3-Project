@@ -69,3 +69,7 @@ json_data = json.loads(response.text)
 
 -------------------------------------------------------------------------------------
 
+User logins in the patient table
+Based on speciality, you see list of available doctors
+filtering the doctors table to show the right doctors
+Connect to the doctor - 

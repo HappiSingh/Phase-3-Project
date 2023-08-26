@@ -1,36 +1,54 @@
+
 from sqlalchemy.orm import declarative_base, relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey
+import ipdb
 
+ipdb.set_trace()
 
 Base = declarative_base()
 
+"""
+class Garden
+id: int PK
+name: str 
+location: str
+size: str
 
-class Doctor(Base):
-    __tablename__ = "doctor"
+class Vegtables
+id: int PK
+veg name: str
+quanity: int
+ripe level: str
+Garden_id: int FK
+"""
+
+class Garden(Base):
+    __tablename__ = "gardens"
     
     id = Column(Integer, primary_key=True)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    speciality = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    location = Column(String, nullable=False)
+    size = Column(String, nullable=False)
     
-    patients = relationship("Patient", backref=("doctor"))
+    vegetables = relationship("Garden", backref=("gardens"))
 
 
     def __repr__(self):
-       return f"<Doctor {self.id} {self.first_name} {self.last_name} {self.speciality}>"
+       return f"<Garden {self.id} {self.name} {self.location} {self.size}>"
 
     
         
-class Patient(Base):
-    __tablename__ = "patient"
+class Vegetable(Base):
+    __tablename__ = "vegetables"
 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    email = Column(String(), unique=True)
+    veg_name = Column(String, nullable=False)
+    quanity = Column(Integer, nullable=False)
+    ripeness = Column(String, unique=True)
 
-    doctor_id = Column(Integer, ForeignKey("doctor.id"))
+    garden_id = Column(Integer, ForeignKey("gardens.id"))
 
 
     def __repr__(self):
-        return f"<Patient {self.id} {self.first_name} {self.last_name} {self.email}>"
+        return f"<Vegetable {self.id} {self.veg_name} {self.quanity} {self.ripeness}>"
+    
