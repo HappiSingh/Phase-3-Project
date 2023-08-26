@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import random
 # from faker import Faker 
-# import ipdb
+import ipdb
 
 if __name__ == '__main__':
 
@@ -34,7 +34,7 @@ Garden_id: int FK
 """
 gardens = [
     Garden(name="Greenwood Garden", location="New Jersey", size="8,000 sqft"),
-    Garden(name=" West Side Community Garden", location="New York", size="6,000 sqft"),
+    Garden(name="West Side Community Garden", location="New York", size="6,000 sqft"),
     Garden(name="Duke Farms Community Garden", location="New Jersey", size="5,000 sqft")
 ]
 
@@ -52,13 +52,17 @@ for garden in db_gardens:
         random_veg_name = random.choice(vegetable_names)
         random_quanity = random.randint(15,40)
         random_ripeness = random.choice(vegetable_ripeness)
-        new_vegetable = Vegetable(veg_name=random_name, quanity=random_color, ripeness=garden)
+        new_vegetable = Vegetable(veg_name=random_veg_name, quanity=random_quanity, ripeness=random_ripeness, garden_id = garden.id )
         session.add(new_vegetable)
 
 
+session.commit()
 
-# session.add()
-# session.commit()
+print("Done commiting.")
+print("Done seeding.")
+
 # session.close()
 
-print("Done seeding.")
+print("Done")
+
+ipdb.set_trace()

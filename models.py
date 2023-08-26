@@ -43,7 +43,7 @@ class Vegetable(Base):
     id = Column(Integer, primary_key=True)
     veg_name = Column(String, nullable=False)
     quanity = Column(Integer, nullable=False)
-    ripeness = Column(String, unique=True)
+    ripeness = Column(String, nullable=False)
 
     garden_id = Column(Integer, ForeignKey("gardens.id"))
 

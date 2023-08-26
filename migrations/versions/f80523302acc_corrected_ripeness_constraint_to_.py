@@ -1,8 +1,8 @@
-"""Corrected one-to-many relation
+"""Corrected ripeness constraint to nullable false
 
-Revision ID: da4ad9d3b229
+Revision ID: f80523302acc
 Revises: 
-Create Date: 2023-08-26 03:12:39.729164
+Create Date: 2023-08-26 04:20:00.343274
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'da4ad9d3b229'
+revision: str = 'f80523302acc'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -31,11 +31,10 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('veg_name', sa.String(), nullable=False),
     sa.Column('quanity', sa.Integer(), nullable=False),
-    sa.Column('ripeness', sa.String(), nullable=True),
+    sa.Column('ripeness', sa.String(), nullable=False),
     sa.Column('garden_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['garden_id'], ['gardens.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('ripeness')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 
