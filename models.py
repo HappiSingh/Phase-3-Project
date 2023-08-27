@@ -33,9 +33,17 @@ class Garden(Base):
     
 # Query that reads all the vegetables given the name (garden selected) 
     @classmethod
-    def query_all_vegs(cls, name):
-        selected_garden = session.query(cls).filter(cls.name == name).first()
-        return selected_garden.vegetables
+    def query_all_vegs(cls, garden_name):
+
+        selected_garden = session.query(cls).filter(cls.name == garden_name).first()
+
+        for veg in selected_garden.vegetables:
+            print(
+                f"id={veg.id}\n"
+                f"name= {veg.veg_name}\n"
+                f"quanity= {veg.quanity}\n"
+                f"ripeness= {veg.ripeness}\n"
+            )
     
 
 # Query that finds the garden id given the name (garden selected)     

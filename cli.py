@@ -10,6 +10,7 @@ engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
 session = Session()
 
+
 class Cli():
 
     def __init__(self):
@@ -41,28 +42,22 @@ class Cli():
 
 #Viewing from DB
         if options[menu_entry_index] == "View all vegetables from Greenwood Garden":
-            print("Here is everything from Greenwood Garden...")
-            self.view_from_g1("Greenwood Garden")
+            self.view_all_from_garden("Greenwood Garden")
 
         elif options[menu_entry_index] == "View all vegetables from West Side Community Garden":
-            print("Here is everything from West Side Community Garden...")
-            self.view_from_g1("West Side Community Garden")
+            self.view_all_from_garden("West Side Community Garden")
 
         elif options[menu_entry_index] == "View all vegetables from Duke Farms Community Garden":
-            print("Here is everything from Duke Farms Community Garden...")
-            self.view_from_g1("Duke Farms Community Garden")
+            self.view_all_from_garden("Duke Farms Community Garden")
 
 #Adding to DB
         elif options[menu_entry_index] == "Add a vegetable to Greenwood Garden":
-            print("Add to Greenwood Garden...")
             self.add_vegetable("Greenwood Garden")
 
         elif options[menu_entry_index] == "Add a vegetable to West Side Community Garden":
-            print("Add to West Side Community Garden...")
             self.add_vegetable("West Side Community Garden")
 
         elif options[menu_entry_index] == "Add a vegetable to Duke Farms Community Garden":
-            print("Add to Duke Farms Community Garden...")
             self.add_vegetable("Duke Farms Community Garden")
 
 #Remove from DB
@@ -78,7 +73,7 @@ class Cli():
             print("Remove from Duke Farms Community Garden...")
             self.remove_vegetable("Duke Farms Community Garden")
 
-#Update the quanity
+#Update the DB
         elif options[menu_entry_index] == "Update the quanity from Greenwood Garden":
             print("Update quanity on Greenwood Garden...")
             self.update_vegetable("Greenwood Garden")
@@ -92,19 +87,49 @@ class Cli():
             self.update_vegetable("Duke Farms Community Garden")
 #Exit 
         else:
-            self.exit(25)
+            self.exit(30)
 
 
    
 # View all vegetables based on garden selected
-    def view_from_g1(self, name):
+    def view_all_from_garden(self, garden_name):
+        
+        self.clear_screen() 
+        print(f"Here is everything from {garden_name}...\n\n")
 
-        self.clear_screen()
-
-        g1 = Garden.query_all_vegs(name)
-        print(g1)
+        all_veggies = Garden.query_all_vegs(garden_name)
+        print(all_veggies)
 
         self.home_option()
+
+
+# Add a new vegetable to the DB  based on garden selected
+    def add_vegetable(self, garden_name):
+        
+        self.clear_screen()
+        print(f"Let's add to {garden_name}...\n\n")
+
+        name = input("Enter the vegetable's name: ")
+        quanity = int(input("Enter the vegetables quanity: "))
+        ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
+
+        print(f"name={name}, quanity={quanity}, ripeness={ripeness}\n")
+
+        selected_garden_id = Garden.get_garden_id(garden_name)
+        print(selected_garden_id)
+        
+        newly_added = Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
+        print(newly_added)
+
+        # new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
+        # session.add(new_veg)
+        # session.commit()
+        
+        self.home_option()
+
+
+
+
 
 
 
@@ -163,31 +188,6 @@ class Cli():
 
         self.home_option()
 
-
-
-
-
-
-    
-    def add_vegetable(self, garden_name):
-        print("Ready to add?")
-        name = input("Enter the vegetables name: ")
-        quanity = int(input("Enter the vegetables quanity: "))
-        ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
-
-        print(f"name={name}, quanity={quanity}, ripeness={ripeness}\n")
-
-        selected_garden_id = Garden.get_garden_id(garden_name)
-        print(selected_garden_id)
-        
-        newly_added = Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
-        print(newly_added)
-
-        # new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
-        # session.add(new_veg)
-        # session.commit()
-        
-        self.home_option()
 
 
 
