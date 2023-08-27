@@ -81,7 +81,13 @@ class Vegetable(Base):
         session.add(new_veg)
         session.commit()
 
-        return new_veg
+        print(
+                f"\n"
+                f"id={new_veg.id}\n"
+                f"name= {new_veg.veg_name}\n"
+                f"quanity= {new_veg.quanity}\n"
+                f"ripeness= {new_veg.ripeness}\n"
+            )
     
     
 # Query that removes a selected vegetable

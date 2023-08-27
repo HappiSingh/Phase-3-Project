@@ -4,7 +4,8 @@ from models import Garden, Vegetable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import ipdb
+# import ipdb
+# ipdb.set_trace() 
 
 engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
@@ -87,7 +88,7 @@ class Cli():
             self.update_vegetable("Duke Farms Community Garden")
 #Exit 
         else:
-            self.exit(30)
+            self.exit()
 
 
    
@@ -97,10 +98,10 @@ class Cli():
         self.clear_screen() 
         print(f"Here is everything from {garden_name}...\n\n")
 
-        all_veggies = Garden.query_all_vegs(garden_name)
-        print(all_veggies)
+        Garden.query_all_vegs(garden_name)
 
         self.home_option()
+
 
 
 # Add a new vegetable to the DB  based on garden selected
@@ -113,22 +114,32 @@ class Cli():
         quanity = int(input("Enter the vegetables quanity: "))
         ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
 
-        print(f"name={name}, quanity={quanity}, ripeness={ripeness}\n")
+        print("\nVegetable has been added successfully:")
 
         selected_garden_id = Garden.get_garden_id(garden_name)
-        print(selected_garden_id)
-        
-        newly_added = Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
-        print(newly_added)
+        Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
 
-        # new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
-        # session.add(new_veg)
-        # session.commit()
-        
         self.home_option()
 
 
 
+    def remove_vegetable(self, garden_name):
+        print("Ready to remove?")
+
+        g1 = Garden.query_g1(garden_name)
+        print(g1)
+
+        name = input("Please enter the name of the vegetable you'd like to remove: ")
+        print(name)
+
+        
+        Vegetable.remove_veg(name)
+
+        print(f"{name} has been removed.")
+        session.expire_all()
+        print(g1)
+
+        self.home_option()
 
 
 
@@ -151,7 +162,7 @@ class Cli():
         # session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})
         # session.commit()
     
-# ipdb.set_trace() 
+
 
         session.expire_all()
 
@@ -170,23 +181,6 @@ class Cli():
 
 
 
-    def remove_vegetable(self, garden_name):
-        print("Ready to remove?")
-
-        g1 = Garden.query_g1(garden_name)
-        print(g1)
-
-        name = input("Please enter the name of the vegetable you'd like to remove: ")
-        print(name)
-
-        
-        Vegetable.remove_veg(name)
-
-        print(f"{name} has been removed.")
-        session.expire_all()
-        print(g1)
-
-        self.home_option()
 
 
 
@@ -261,16 +255,16 @@ class Cli():
 
 
 
-    # exit option to close program
-    def exit(self, lines):
-        print("\n" * lines)
+# exit option to close program
+    def exit(self):
+        print("\n" * 30)
         print("Thank you for visiting, Goodbye!")
+        print("\n" * 20)
 
-    # To add room between menus, default set but override possible
-    def clear_screen(self, lines=30):
+
+# To add room between menus, default set but override possible
+    def clear_screen(self, lines=40):
         print("\n" * lines)
-
-    
 
 
 if __name__ == '__main__':
