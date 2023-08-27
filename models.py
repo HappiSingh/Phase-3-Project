@@ -80,3 +80,11 @@ class Vegetable(Base):
            f"            ripeness='{self.ripeness}'>\n\n"
        )
 
+
+    @classmethod
+    def add_veg(cls, name, quanity, ripeness, g2):
+        new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
+        session.add(new_veg)
+        session.commit()
+
+        return new_veg

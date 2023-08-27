@@ -68,17 +68,25 @@ class Cli():
     
     def add_vegetable(self, garden_name):
         print("Ready to add?")
-
         name = input("Enter the vegetables name: ")
         quanity = int(input("Enter the vegetables quanity: "))
         ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
 
-        print(f"name={name}, quanity={quanity}, ripeness={ripeness}")
+        print(f"name={name}, quanity={quanity}, ripeness={ripeness}\n")
 
         g2 = Garden.get_garden_id(garden_name)
         print(g2)
         
-        ipdb.set_trace() 
+        newly_added = Vegetable.add_veg(name, quanity, ripeness, g2)
+        print(newly_added)
+
+        # new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
+        # session.add(new_veg)
+        # session.commit()
+        
+        self.home_option()
+
+        # ipdb.set_trace() 
 
 
 
