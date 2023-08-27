@@ -1,9 +1,16 @@
 
 from sqlalchemy.orm import declarative_base, relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 
 Base = declarative_base()
 # import ipdb
+
+# engine = create_engine("sqlite:///main.db")
+# Session = sessionmaker(bind=engine)
+# session = Session()
 
 
 """
@@ -42,7 +49,6 @@ class Garden(Base):
            f"         size='{self.size}'>\n\n"
        )
     
-        
 class Vegetable(Base):
     __tablename__ = "vegetables"
 
@@ -61,4 +67,4 @@ class Vegetable(Base):
            f"            quanity='{self.quanity}',\n"
            f"            ripeness='{self.ripeness}'>\n\n"
        )
-    
+
