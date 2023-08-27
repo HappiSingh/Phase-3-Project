@@ -50,8 +50,8 @@ class Garden(Base):
        )
     
     @classmethod
-    def query_g1(cls, name):
-        g1 = session.query(cls).filter(cls.name == name).first()
+    def query_all_vegs(cls, name):
+        selected_garden = session.query(cls).filter(cls.name == name).first()
         return g1.vegetables
     
     @classmethod

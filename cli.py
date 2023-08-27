@@ -4,8 +4,6 @@ from models import Garden, Vegetable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
-
 import ipdb
 
 engine = create_engine("sqlite:///main.db")
@@ -17,12 +15,11 @@ class Cli():
     def __init__(self):
         pass
     
-    
     def start(self):
         self.clear_screen(15)
 
-        print("Welcome to our Gardening App\n")
-        print("Please choose a garden to visit\n")
+        print("Welcome to my Garden Management App\n")
+        print("What would you like to do?\n")
 
         options = [
             "View all vegetables from Greenwood Garden", 
@@ -42,9 +39,7 @@ class Cli():
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
-
-
-#viewing from DB
+#Viewing from DB
         if options[menu_entry_index] == "View all vegetables from Greenwood Garden":
             print("Here is everything from Greenwood Garden...")
             self.view_from_g1("Greenwood Garden")
@@ -56,7 +51,6 @@ class Cli():
         elif options[menu_entry_index] == "View all vegetables from Duke Farms Community Garden":
             print("Here is everything from Duke Farms Community Garden...")
             self.view_from_g1("Duke Farms Community Garden")
-
 
 #Adding to DB
         elif options[menu_entry_index] == "Add a vegetable to Greenwood Garden":
@@ -70,7 +64,6 @@ class Cli():
         elif options[menu_entry_index] == "Add a vegetable to Duke Farms Community Garden":
             print("Add to Duke Farms Community Garden...")
             self.add_vegetable("Duke Farms Community Garden")
-
 
 #Remove from DB
         elif options[menu_entry_index] == "Remove a vegetable from Greenwood Garden":
@@ -103,6 +96,15 @@ class Cli():
 
 
    
+# View all vegetables based on garden selected
+    def view_from_g1(self, name):
+
+        self.clear_screen()
+
+        g1 = Garden.query_all_vegs(name)
+        print(g1)
+
+        self.home_option()
 
 
 
@@ -128,11 +130,11 @@ class Cli():
 
         session.expire_all()
 
-        g2 = Garden.query_g1(garden_name)
-        print(g2)
+        
 
 
         print(f"{name}'s quanity has been updated to {new_qty}.")
+        print(g1)
 
         self.home_option()
 
@@ -156,21 +158,14 @@ class Cli():
         Vegetable.remove_veg(name)
 
         print(f"{name} has been removed.")
-
-        self.home_option()
-
-
-
-
-    # View all vegetables based on garden selected
-    def view_from_g1(self, name):
-
-        self.clear_screen()
-
-        g1 = Garden.query_g1(name)
+        session.expire_all()
         print(g1)
 
         self.home_option()
+
+
+
+
 
 
     
