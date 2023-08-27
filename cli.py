@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 from simple_term_menu import TerminalMenu
 from models import Garden, Vegetable
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 
-# import ipdb
+import ipdb
 # ipdb.set_trace() 
 
 engine = create_engine("sqlite:///main.db")
@@ -85,8 +85,7 @@ class Cli():
 # Order By quanity
 
         elif options[menu_entry_index] == "Order by quanity":
-
-            pass
+            self.order_menu()           
 
 #Exit 
         else:
@@ -94,6 +93,51 @@ class Cli():
 
 
    
+    def order_menu(self):
+
+        self.clear_screen()
+        print("you made it to order_menu_options")
+  
+        options = ["Greenwood Garden", "West Side Community Garden", "Duke Farms Community Garden", "Home"]
+        terminal_menu = TerminalMenu(options)
+        menu_entry_index = terminal_menu.show()
+
+        self.order_by(options[menu_entry_index])
+
+
+    def order_by(self, garden_name):
+
+        self.clear_screen() 
+        print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
+
+        Vegetable.order_by_asc(garden_name)
+        # g_id = Garden.get_garden_id(garden_name)
+        # o1 = session.query(Vegetable).filter(Vegetable.garden_id == g_id).order_by(Vegetable.quanity).all()
+
+        # print(o1)
+
+        
+
+        
+        # ipdb.set_trace() 
+        
+
+        # if options[menu_entry_index] == "Greenwood Garden":
+        #     self.view_all_vegetable(garden)
+            
+        # elif options[menu_entry_index] == "West Side Community Garden":
+           
+            
+        # elif options[menu_entry_index] == "Duke Farms Community Garden":
+            
+
+
+        # else:
+        #    self.home_option()
+
+
+
+
 # View all vegetables based on garden selected
     def view_all_from_garden(self, garden_name):
         

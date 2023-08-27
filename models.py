@@ -48,8 +48,8 @@ class Garden(Base):
 
 # Query that finds the garden id given the name (garden selected)     
     @classmethod
-    def get_garden_id(cls, name):
-        selected_garden = session.query(cls).filter(cls.name == name).first()
+    def get_garden_id(cls, garden_name):
+        selected_garden = session.query(cls).filter(cls.name == garden_name).first()
         return selected_garden.id
 
 
@@ -102,3 +102,18 @@ class Vegetable(Base):
     def update_quanity(cls, name, new_qty):
         session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})
         session.commit()
+
+
+# Order by quanity based on the selected garden: ASC
+    @classmethod
+    def order_by_asc(cls, garden_name):
+        g_id = Garden.get_garden_id(garden_name)
+        ordered_list = session.query(Vegetable).filter(Vegetable.garden_id == g_id).order_by(Vegetable.quanity).all()
+
+        for veg in ordered_list:
+                print(
+                    f"id={veg.id}\n"
+                    f"name= {veg.veg_name}\n"
+                    f"quanity= {veg.quanity}\n"
+                    f"ripeness= {veg.ripeness}\n"
+                )
