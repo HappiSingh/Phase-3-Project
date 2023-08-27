@@ -12,24 +12,6 @@ engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
 session = Session()
 
-
-"""
-Garden Manager 
-
-class Garden
-id: int PK
-name: str 
-location: str
-size: str
-
-class Vegtables
-id: int PK
-veg name: str
-quanity: int
-ripe level: str
-Garden_id: int FK
-"""
-
 class Garden(Base):
     __tablename__ = "gardens"
     
@@ -49,15 +31,18 @@ class Garden(Base):
            f"         size='{self.size}'>\n\n"
        )
     
+# Query that reads all the vegetables given the name (garden selected) 
     @classmethod
     def query_all_vegs(cls, name):
         selected_garden = session.query(cls).filter(cls.name == name).first()
-        return g1.vegetables
+        return selected_garden.vegetables
     
+
+# Query that finds the garden id given the name (garden selected)     
     @classmethod
     def get_garden_id(cls, name):
-        g2 = session.query(cls).filter(cls.name == name).first()
-        return g2.id
+        selected_garden = session.query(cls).filter(cls.name == name).first()
+        return selected_garden.id
 
 
 
@@ -81,20 +66,24 @@ class Vegetable(Base):
        )
 
 
+# Query that adds a new vegetable
     @classmethod
-    def add_veg(cls, name, quanity, ripeness, g2):
-        new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
+    def add_veg(cls, name, quanity, ripeness, selected_garden_id):
+        new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=selected_garden_id)
         session.add(new_veg)
         session.commit()
 
         return new_veg
     
-
+    
+# Query that removes a selected vegetable
     @classmethod
     def remove_veg(cls, name):
         session.query(cls).filter(cls.veg_name == name).delete()
         session.commit()
 
+
+# Query that updates the quanity of a vegetable
     @classmethod
     def update_quanity(cls, name, new_qty):
         session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})

@@ -177,10 +177,10 @@ class Cli():
 
         print(f"name={name}, quanity={quanity}, ripeness={ripeness}\n")
 
-        g2 = Garden.get_garden_id(garden_name)
-        print(g2)
+        selected_garden_id = Garden.get_garden_id(garden_name)
+        print(selected_garden_id)
         
-        newly_added = Vegetable.add_veg(name, quanity, ripeness, g2)
+        newly_added = Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
         print(newly_added)
 
         # new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=g2)
