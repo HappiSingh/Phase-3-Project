@@ -92,7 +92,7 @@ class Cli():
             self.exit()
 
 
-   
+# Order by menu: choose garden
     def order_menu(self):
 
         self.clear_screen()
@@ -111,31 +111,9 @@ class Cli():
         print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
 
         Vegetable.order_by_asc(garden_name)
-        # g_id = Garden.get_garden_id(garden_name)
-        # o1 = session.query(Vegetable).filter(Vegetable.garden_id == g_id).order_by(Vegetable.quanity).all()
-
-        # print(o1)
-
         
-
-        
-        # ipdb.set_trace() 
-        
-
-        # if options[menu_entry_index] == "Greenwood Garden":
-        #     self.view_all_vegetable(garden)
-            
-        # elif options[menu_entry_index] == "West Side Community Garden":
-           
-            
-        # elif options[menu_entry_index] == "Duke Farms Community Garden":
-            
-
-
-        # else:
-        #    self.home_option()
-
-
+        self.home_option()
+       
 
 
 # View all vegetables based on garden selected
