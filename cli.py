@@ -7,7 +7,6 @@ from sqlalchemy.orm import sessionmaker
 
 
 import ipdb
-        # ipdb.set_trace() 
 
 engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
@@ -29,22 +28,27 @@ class Cli():
             "View all vegetables from Greenwood Garden", 
             "View all vegetables from West Side Community Garden", 
             "View all vegetables from Duke Farms Community Garden", 
+            "Add a vegetable to Greenwood Garden",
             "Exit"
             ]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
         if options[menu_entry_index] == "View all vegetables from Greenwood Garden":
-            print("You selected Garden 1")
+            print("Here is everything from Greenwood Garden...")
             self.view_from_g1("Greenwood Garden")
 
         elif options[menu_entry_index] == "View all vegetables from West Side Community Garden":
-            print("You selected Garden 2")
+            print("Here is everything from West Side Community Garden...")
             self.view_from_g1("West Side Community Garden")
 
         elif options[menu_entry_index] == "View all vegetables from Duke Farms Community Garden":
-            print("You selected Garden 3")
+            print("Here is everything from Duke Farms Community Garden...")
             self.view_from_g1("Duke Farms Community Garden")
+
+        elif options[menu_entry_index] == "Add a vegetable to Greenwood Garden":
+            print("Add to Greenwood Garden...")
+            self.add_vegetable("Greenwood Garden")
 
         else:
             self.exit(20)
@@ -59,6 +63,23 @@ class Cli():
         print(g1)
 
         self.home_option()
+
+
+    
+    def add_vegetable(self, garden_name):
+        print("Ready to add?")
+
+        name = input("Enter the vegetables name: ")
+        quanity = int(input("Enter the vegetables quanity: "))
+        ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
+
+        print(f"name={name}, quanity={quanity}, ripeness={ripeness}")
+
+        g2 = Garden.get_garden_id(garden_name)
+        print(g2)
+        
+        ipdb.set_trace() 
+
 
 
     # Home option to return to the homepage [start()]
@@ -112,8 +133,6 @@ class Cli():
 
 
 
-    def add_vegetable(self):
-        pass
 
     def update_vegetable(self):
         pass

@@ -53,6 +53,11 @@ class Garden(Base):
     def query_g1(cls, name):
         g1 = session.query(cls).filter(cls.name == name).first()
         return g1.vegetables
+    
+    @classmethod
+    def get_garden_id(cls, name):
+        g2 = session.query(cls).filter(cls.name == name).first()
+        return g2.id
 
 
 
