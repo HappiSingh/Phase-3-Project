@@ -8,9 +8,9 @@ from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
 # import ipdb
 
-# engine = create_engine("sqlite:///main.db")
-# Session = sessionmaker(bind=engine)
-# session = Session()
+engine = create_engine("sqlite:///main.db")
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 """
@@ -49,6 +49,13 @@ class Garden(Base):
            f"         size='{self.size}'>\n\n"
        )
     
+    @classmethod
+    def query_g1(cls, name):
+        g1 = session.query(cls).filter(cls.name == name).first()
+        return g1.vegetables
+
+
+
 class Vegetable(Base):
     __tablename__ = "vegetables"
 
