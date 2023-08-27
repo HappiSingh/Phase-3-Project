@@ -124,20 +124,21 @@ class Cli():
 
 
     def remove_vegetable(self, garden_name):
-        print("Ready to remove?")
+        
+        self.clear_screen()
+        print(f"Let's remove from {garden_name}...\n\n")
 
-        g1 = Garden.query_g1(garden_name)
-        print(g1)
+        Garden.query_all_vegs(garden_name)
 
         name = input("Please enter the name of the vegetable you'd like to remove: ")
-        print(name)
 
-        
         Vegetable.remove_veg(name)
 
-        print(f"{name} has been removed.")
+        print(f"\n{name} has been removed")
+        print(f"\nHere is the updated list")
+
         session.expire_all()
-        print(g1)
+        Garden.query_all_vegs(garden_name)
 
         self.home_option()
 
