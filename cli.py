@@ -90,18 +90,18 @@ class Cli():
     def remove_vegetable(self, garden_name):
         print("Ready to remove?")
 
-        # g1 = Garden.query_g1(garden_name)
-        # print(g1)
+        g1 = Garden.query_g1(garden_name)
+        print(g1)
 
-        # name = input("Please enter the name of the vegetable you'd like to remove: ")
-        # print(name)
+        name = input("Please enter the name of the vegetable you'd like to remove: ")
+        print(name)
 
         
-        # Vegetable.remove_veg(name)
+        Vegetable.remove_veg(name)
 
-        # print(f"{name} has been removed.")
+        print(f"{name} has been removed.")
 
-        # self.home_option()
+        self.home_option()
 
 
 
