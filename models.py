@@ -59,10 +59,6 @@ class Garden(Base):
         g2 = session.query(cls).filter(cls.name == name).first()
         return g2.id
 
-    @classmethod
-    def get_garden_name(cls, name):
-        g3 = session.query(cls).filter(cls.name == name).first()
-        return g3.name
 
 
 class Vegetable(Base):
@@ -99,4 +95,7 @@ class Vegetable(Base):
         session.query(cls).filter(cls.veg_name == name).delete()
         session.commit()
 
-        
+    @classmethod
+    def update_quanity(cls, name, new_qty):
+        session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})
+        session.commit()

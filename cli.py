@@ -103,7 +103,6 @@ class Cli():
 
 
    
-# ipdb.set_trace() 
 
 
 
@@ -112,7 +111,30 @@ class Cli():
         print("Welcome to updating quanity")
 
 
+        g1 = Garden.query_g1(garden_name)
+        print(g1)
 
+        name = input("Please enter the name of the vegetable you'd like update: ")
+        print(name)
+
+        new_qty = input(f"Please enter the new quanity of {name}: ")
+        print(new_qty)
+
+        Vegetable.update_quanity(name, new_qty)
+        # session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})
+        # session.commit()
+    
+# ipdb.set_trace() 
+
+        session.expire_all()
+
+        g2 = Garden.query_g1(garden_name)
+        print(g2)
+
+
+        print(f"{name}'s quanity has been updated to {new_qty}.")
+
+        self.home_option()
 
 
 
