@@ -36,6 +36,7 @@ class Cli():
             "Update the quanity from Greenwood Garden",
             "Update the quanity from West Side Community Garden",
             "Update the quanity from Duke Farms Community Garden",
+            "Order by quanity",
             "Exit"
             ]
         terminal_menu = TerminalMenu(options)
@@ -62,30 +63,31 @@ class Cli():
             self.add_vegetable("Duke Farms Community Garden")
 
 #Remove from DB
-        elif options[menu_entry_index] == "Remove a vegetable from Greenwood Garden":
-            print("Remove from Greenwood Garden...")
+        elif options[menu_entry_index] == "Remove a vegetable from Greenwood Garden":          
             self.remove_vegetable("Greenwood Garden")
 
-        elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":
-            print("Remove from West Side Community Gardenn...")
+        elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":           
             self.remove_vegetable("West Side Community Garden")
 
-        elif options[menu_entry_index] == "Remove a vegetable from Duke Farms Community Garden":
-            print("Remove from Duke Farms Community Garden...")
+        elif options[menu_entry_index] == "Remove a vegetable from Duke Farms Community Garden":          
             self.remove_vegetable("Duke Farms Community Garden")
 
 #Update the DB
-        elif options[menu_entry_index] == "Update the quanity from Greenwood Garden":
-            print("Update quanity on Greenwood Garden...")
+        elif options[menu_entry_index] == "Update the quanity from Greenwood Garden":           
             self.update_vegetable("Greenwood Garden")
 
-        elif options[menu_entry_index] == "Update the quanity from West Side Community Garden":
-            print("Update quanity on West Side Community Garden...")
+        elif options[menu_entry_index] == "Update the quanity from West Side Community Garden":           
             self.update_vegetable("West Side Community Garden")
 
         elif options[menu_entry_index] == "Update the quanity from Duke Farms Community Garden":
-            print("Update quanity on Duke Farms Community Garden...")
             self.update_vegetable("Duke Farms Community Garden")
+
+# Order By quanity
+
+        elif options[menu_entry_index] == "Order by quanity":
+
+            pass
+
 #Exit 
         else:
             self.exit()
@@ -136,9 +138,8 @@ class Cli():
         Vegetable.remove_veg(name)
 
         print(f"\n{name} has been removed")
-        print(f"\nHere is the updated list")
+        print(f"\nHere is the updated list\n")
 
-        session.expire_all()
         Garden.query_all_vegs(garden_name)
 
         self.home_option()
@@ -149,53 +150,25 @@ class Cli():
     def update_vegetable(self, garden_name):
 
         self.clear_screen()
-        print(f"Let's update {garden_name}...\n\n")
-
+        print(f"Let's update the quanity at {garden_name}...\n\n")
 
         Garden.query_all_vegs(garden_name)
 
         name = input("Please enter the name of the vegetable you'd like update: ")
-        print(name)
-
         new_qty = input(f"Please enter the new quanity of {name}: ")
-        print(new_qty)
 
         Vegetable.update_quanity(name, new_qty)
-        # session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})
-        # session.commit()
-    
-
-
-        session.expire_all()
-
         
-
-
-        print(f"{name}'s quanity has been updated to {new_qty}.")
-        print(g1)
+        print(f"\n{name}'s quanity has been updated to {new_qty}.\n")
+        Garden.query_all_vegs(garden_name)
 
         self.home_option()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # Home option to return to the homepage [start()]
+# Home option to return to the homepage
     def home_option(self):
+
         self.clear_screen(2)
 
         options = ["Home"]
