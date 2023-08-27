@@ -104,7 +104,7 @@ class Cli():
 
 
 
-# Add a new vegetable to the DB  based on garden selected
+# Add a new vegetable to the DB  based on the user input
     def add_vegetable(self, garden_name):
         
         self.clear_screen()
@@ -123,6 +123,7 @@ class Cli():
 
 
 
+# Removes a vegetable from the DB based on name entered
     def remove_vegetable(self, garden_name):
         
         self.clear_screen()
@@ -144,14 +145,14 @@ class Cli():
 
 
 
-
-
+# Updates a vegetables quanity based on user selection
     def update_vegetable(self, garden_name):
-        print("Welcome to updating quanity")
+
+        self.clear_screen()
+        print(f"Let's update {garden_name}...\n\n")
 
 
-        g1 = Garden.query_g1(garden_name)
-        print(g1)
+        Garden.query_all_vegs(garden_name)
 
         name = input("Please enter the name of the vegetable you'd like update: ")
         print(name)
