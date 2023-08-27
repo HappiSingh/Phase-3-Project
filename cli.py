@@ -34,10 +34,15 @@ class Cli():
             "Remove a vegetable from Greenwood Garden",
             "Remove a vegetable from West Side Community Garden",
             "Remove a vegetable from Duke Farms Community Garden",
+            "Update the quanity from Greenwood Garden",
+            "Update the quanity from West Side Community Garden",
+            "Update the quanity from Duke Farms Community Garden",
             "Exit"
             ]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
+
+
 
 #viewing from DB
         if options[menu_entry_index] == "View all vegetables from Greenwood Garden":
@@ -70,18 +75,47 @@ class Cli():
 #Remove from DB
         elif options[menu_entry_index] == "Remove a vegetable from Greenwood Garden":
             print("Remove from Greenwood Garden...")
-            self. remove_vegetable("Greenwood Garden")
+            self.remove_vegetable("Greenwood Garden")
 
         elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":
             print("Remove from West Side Community Gardenn...")
-            self. remove_vegetable("West Side Community Garden")
+            self.remove_vegetable("West Side Community Garden")
 
         elif options[menu_entry_index] == "Remove a vegetable from Duke Farms Community Garden":
-            print("Duke Farms Community Garden...")
-            self. remove_vegetable("Duke Farms Community Garden")
+            print("Remove from Duke Farms Community Garden...")
+            self.remove_vegetable("Duke Farms Community Garden")
+
+#Update the quanity
+        elif options[menu_entry_index] == "Update the quanity from Greenwood Garden":
+            print("Update quanity on Greenwood Garden...")
+            self.update_vegetable("Greenwood Garden")
+
+        elif options[menu_entry_index] == "Update the quanity from West Side Community Garden":
+            print("Update quanity on West Side Community Garden...")
+            self.update_vegetable("West Side Community Garden")
+
+        elif options[menu_entry_index] == "Update the quanity from Duke Farms Community Garden":
+            print("Update quanity on Duke Farms Community Garden...")
+            self.update_vegetable("Duke Farms Community Garden")
 #Exit 
         else:
             self.exit(25)
+
+
+   
+# ipdb.set_trace() 
+
+
+
+
+    def update_vegetable(self, garden_name):
+        print("Welcome to updating quanity")
+
+
+
+
+
+
 
 
 
@@ -105,7 +139,6 @@ class Cli():
 
 
 
-# ipdb.set_trace() 
 
     # View all vegetables based on garden selected
     def view_from_g1(self, name):
@@ -200,8 +233,6 @@ class Cli():
 
 
 
-    def update_vegetable(self):
-        pass
 
 
     def filter_by_ripeness(self):
