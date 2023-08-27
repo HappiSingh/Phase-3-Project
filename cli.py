@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 from simple_term_menu import TerminalMenu
 from models import Garden, Vegetable
 from sqlalchemy import create_engine
@@ -29,11 +29,15 @@ class Cli():
             "View all vegetables from West Side Community Garden", 
             "View all vegetables from Duke Farms Community Garden", 
             "Add a vegetable to Greenwood Garden",
+            "Add a vegetable to West Side Community Garden",
+            "Add a vegetable to Duke Farms Community Garden",
+            "Remove a vegetable from Greenwood Garden",
             "Exit"
             ]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
+#viewing from DB
         if options[menu_entry_index] == "View all vegetables from Greenwood Garden":
             print("Here is everything from Greenwood Garden...")
             self.view_from_g1("Greenwood Garden")
@@ -46,12 +50,46 @@ class Cli():
             print("Here is everything from Duke Farms Community Garden...")
             self.view_from_g1("Duke Farms Community Garden")
 
+
+#Adding to DB
         elif options[menu_entry_index] == "Add a vegetable to Greenwood Garden":
             print("Add to Greenwood Garden...")
             self.add_vegetable("Greenwood Garden")
 
+        elif options[menu_entry_index] == "Add a vegetable to West Side Community Garden":
+            print("Add to West Side Community Garden...")
+            self.add_vegetable("West Side Community Garden")
+
+        elif options[menu_entry_index] == "Add a vegetable to Duke Farms Community Garden":
+            print("Add to Duke Farms Community Garden...")
+            self.add_vegetable("Duke Farms Community Garden")
+
+
+#Remove from DB
+        elif options[menu_entry_index] == "Remove a vegetable from Greenwood Garden":
+            print("Remove from Greenwood Garden...")
+            self. remove_vegetable("Greenwood Garden")
+
+#Exit 
         else:
-            self.exit(20)
+            self.exit(25)
+
+
+
+
+
+    def remove_vegetable(self, garden_name):
+        print("Ready to remove?")
+
+        g1 = Garden.query_g1(garden_name)
+        print(g1)
+
+
+        ipdb.set_trace() 
+
+        self.home_option()
+
+
 
 
     # View all vegetables based on garden selected
@@ -86,7 +124,12 @@ class Cli():
         
         self.home_option()
 
-        # ipdb.set_trace() 
+
+
+
+
+
+
 
 
 
@@ -145,8 +188,6 @@ class Cli():
     def update_vegetable(self):
         pass
 
-    def remove_vegetable(self):
-        pass
 
     def filter_by_ripeness(self):
         pass
@@ -167,7 +208,8 @@ class Cli():
         print("\n" * lines)
 
     
-app = Cli()
-app.start()
 
-#if __name__ == '__main__':
+
+if __name__ == '__main__':
+    app = Cli()
+    app.start()
