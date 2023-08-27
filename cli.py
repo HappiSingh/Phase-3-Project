@@ -72,9 +72,9 @@ class Cli():
             print("Remove from Greenwood Garden...")
             self. remove_vegetable("Greenwood Garden")
 
-        # elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":
-        #     print("Remove from West Side Community Gardenn...")
-        #     self. remove_vegetable("West Side Community Garden")
+        elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":
+            print("Remove from West Side Community Gardenn...")
+            self. remove_vegetable("West Side Community Garden")
 
         # elif options[menu_entry_index] == "Remove a vegetable from Duke Farms Community Garden":
         #     print("Duke Farms Community Garden...")
