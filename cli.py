@@ -12,22 +12,28 @@ class Cli():
     def start(self):
         self.clear_screen()
         
-        print("Welcome to our Gardening App")
-        print("Please choose a garden")
+        print("Welcome to our Gardening App\n")
+        print("Please choose a garden to visit\n")
         
-#names should come from DB
+
         options = ["Garden 1", "Garden 2", "Garden 3", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
         if options[menu_entry_index] == "Garden 1":
             print("You selected Garden 1")
+            self.show_options()
         elif options[menu_entry_index] == "Garden 2":
             print("You selected Garden 2")
         elif options[menu_entry_index] == "Garden 3":
             print("You selected Garden 3")
         else:
             self.exit()
+
+
+    def show_options(self):
+        print("your now in show_options")
+
 
 
     def view_all_vegetable(self):
@@ -58,8 +64,10 @@ class Cli():
 
     
     def clear_screen(self):
-        print("\n" * 40)
+        print("\n" * 30)
 
     
 app = Cli()
 app.start()
+
+#if __name__ == '__main__':

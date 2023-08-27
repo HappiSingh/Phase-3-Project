@@ -5,6 +5,7 @@ import random
 # from faker import Faker 
 import ipdb
 
+# is this needed here?
 if __name__ == '__main__':
 
     engine = create_engine("sqlite:///main.db")
