@@ -32,6 +32,8 @@ class Cli():
             "Add a vegetable to West Side Community Garden",
             "Add a vegetable to Duke Farms Community Garden",
             "Remove a vegetable from Greenwood Garden",
+            "Remove a vegetable from West Side Community Garden",
+            "Remove a vegetable from Duke Farms Community Garden",
             "Exit"
             ]
         terminal_menu = TerminalMenu(options)
@@ -70,6 +72,13 @@ class Cli():
             print("Remove from Greenwood Garden...")
             self. remove_vegetable("Greenwood Garden")
 
+        # elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":
+        #     print("Remove from West Side Community Gardenn...")
+        #     self. remove_vegetable("West Side Community Garden")
+
+        # elif options[menu_entry_index] == "Remove a vegetable from Duke Farms Community Garden":
+        #     print("Duke Farms Community Garden...")
+        #     self. remove_vegetable("Duke Farms Community Garden")
 #Exit 
         else:
             self.exit(25)
@@ -84,13 +93,19 @@ class Cli():
         g1 = Garden.query_g1(garden_name)
         print(g1)
 
+        name = input("Please enter the name of the vegetable you'd like to remove: ")
+        print(name)
 
-        ipdb.set_trace() 
+        
+        Vegetable.remove_veg(name)
+
+        print(f"{name} has been removed.")
 
         self.home_option()
 
 
 
+# ipdb.set_trace() 
 
     # View all vegetables based on garden selected
     def view_from_g1(self, name):

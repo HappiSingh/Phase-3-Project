@@ -88,3 +88,11 @@ class Vegetable(Base):
         session.commit()
 
         return new_veg
+    
+
+    @classmethod
+    def remove_veg(cls, name):
+        session.query(cls).filter(cls.veg_name == name).delete()
+        session.commit()
+
+        
