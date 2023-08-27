@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 import ipdb
+        # ipdb.set_trace() 
 
 engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
@@ -19,7 +20,7 @@ class Cli():
     
     
     def start(self):
-        self.clear_screen()
+        self.clear_screen(15)
 
         print("Welcome to our Gardening App\n")
         print("Please choose a garden to visit\n")
@@ -46,13 +47,30 @@ class Cli():
             self.view_from_g1("Duke Farms Community Garden")
 
         else:
-            self.exit()
+            self.exit(20)
 
-        # ipdb.set_trace() 
 
+    # View all vegetables based on garden selected
     def view_from_g1(self, name):
+
+        self.clear_screen()
+
         g1 = Garden.query_g1(name)
         print(g1)
+
+        self.home_option()
+
+
+    # Home option to return to the homepage [start()]
+    def home_option(self):
+        self.clear_screen(2)
+
+        options = ["Home"]
+        terminal_menu = TerminalMenu(options)
+        menu_entry_index = terminal_menu.show()
+
+        if options[menu_entry_index] == "Home":
+            self.start()
         
 
 
@@ -112,14 +130,14 @@ class Cli():
 
 
 
-
-    def exit(self):
-        self.clear_screen()
+    # exit option to close program
+    def exit(self, lines):
+        print("\n" * lines)
         print("Thank you for visiting, Goodbye!")
 
-    
-    def clear_screen(self):
-        print("\n" * 45)
+    # To add room between menus, default set but override possible
+    def clear_screen(self, lines=30):
+        print("\n" * lines)
 
     
 app = Cli()
