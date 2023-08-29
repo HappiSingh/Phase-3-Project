@@ -51,7 +51,7 @@ vegetable_ripeness = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
 for garden in db_gardens:
     for _ in range(4):
         random_veg_name = random.choice(vegetable_names)
-        random_quanity = random.randint(15,55)
+        random_quanity = random.randint(15,85)
         random_ripeness = random.choice(vegetable_ripeness)
         new_vegetable = Vegetable(veg_name=random_veg_name, quanity=random_quanity, ripeness=random_ripeness, garden_id = garden.id )
         session.add(new_vegetable)

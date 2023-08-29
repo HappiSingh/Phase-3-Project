@@ -9,6 +9,7 @@ alembic = "*"
 ipdb = "*"
 faker = "*"
 simple-term-menu = "*"
+tabulate = "*"
 
 [dev-packages]
 

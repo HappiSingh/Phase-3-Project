@@ -3,6 +3,7 @@ from sqlalchemy.orm import declarative_base, relationship, backref
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from tabulate import tabulate
 
 
 Base = declarative_base()
@@ -37,15 +38,16 @@ class Garden(Base):
     def query_all_vegs(cls, garden_name):
 
         selected_garden = session.query(cls).filter(cls.name == garden_name).first()
+        veg_list = []
 
         for veg in selected_garden.vegetables:
-            print(
-                f"id={veg.id}\n"
-                f"name= {veg.veg_name}\n"
-                f"quanity= {veg.quanity}\n"
-                f"ripeness= {veg.ripeness}\n"
-            )
-    
+            veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
+        
+        headers = ["id", "name", "quanity", "ripeness"]
+
+        print(tabulate(veg_list, headers=headers, tablefmt="grid"))
+        
+         
 
 # Query that finds the garden id given the name (garden selected)     
     @classmethod
@@ -82,13 +84,11 @@ class Vegetable(Base):
         session.add(new_veg)
         session.commit()
 
-        print(
-                f"\n"
-                f"id={new_veg.id}\n"
-                f"name= {new_veg.veg_name}\n"
-                f"quanity= {new_veg.quanity}\n"
-                f"ripeness= {new_veg.ripeness}\n"
-            )
+        veg_list = [new_veg.id, new_veg.veg_name, new_veg.quanity, new_veg.ripeness]
+        
+        headers = ["id", "name", "quanity", "ripeness"]
+
+        print(tabulate([veg_list], headers=headers, tablefmt="grid"))
     
     
 # Query that removes a selected vegetable
@@ -118,3 +118,50 @@ class Vegetable(Base):
                     f"quanity= {veg.quanity}\n"
                     f"ripeness= {veg.ripeness}\n"
                 )
+
+    
+    @classmethod
+    def validate_ripeness_input(cls):
+        ripeness_list = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
+
+        ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
+
+        while ripeness not in ripeness_list:
+            print("Not a valid option, Please choose from the list")
+            ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
+
+        return ripeness
+    
+
+    
+    @classmethod
+    def validate_quanity_input(cls):
+        while True:
+            try:
+                quanity = int(input("Enter the quanity (between 1 and 100): "))
+                if 1 <= quanity <= 100:
+                    return quanity  # Exit the loop if input is valid
+                else:
+                    print("Quanity must be at least 1 and no more than 100.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+
+    
+    @classmethod
+    def validate_name_input(cls, question):
+        while True:
+            name = input(question)
+            if name.isalpha():
+                return name  # Exit the loop if input is valid
+            else:
+                print("Invalid name. Please enter a name containing only letters.")
+
+        
+    
+    @classmethod
+    def check_name_exist(cls, name, garden_name):
+        
+        check_exist = session.query(cls).filter(cls.veg_name == name).filter(cls.garden_id == Garden.vegetables).filter(Garden.name == garden_name).first()
+
+        return check_exist

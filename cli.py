@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 from simple_term_menu import TerminalMenu
 from models import Garden, Vegetable
-# from sqlalchemy import create_engine
-# from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-# import ipdb
-# ipdb.set_trace() 
+import ipdb
 
-# engine = create_engine("sqlite:///main.db")
-# Session = sessionmaker(bind=engine)
-# session = Session()
+
+engine = create_engine("sqlite:///main.db")
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 class Cli():
@@ -58,7 +58,7 @@ class Cli():
 # Choose the garden sub menu
     def choose_garden_menu(self, arg_name):
 
-        self.clear_screen()
+        self.clear_screen(15)
         print("Please choose a Garden")
   
         options = ["Greenwood Garden", "West Side Community Garden", "Duke Farms Community Garden", "Home"]
@@ -91,7 +91,7 @@ class Cli():
 # View all vegetables based on garden selected
     def view_all_from_garden(self, garden_name):
         
-        self.clear_screen() 
+        self.clear_screen(15) 
         print(f"Here is everything from {garden_name}...\n\n")
 
         Garden.query_all_vegs(garden_name)
@@ -103,12 +103,15 @@ class Cli():
 # Add a new vegetable to the DB  based on the user input
     def add_vegetable(self, garden_name):
         
-        self.clear_screen()
+        self.clear_screen(15)
         print(f"Let's add to {garden_name}...\n\n")
 
-        name = input("Enter the new vegetable's name: ")
-        quanity = int(input("Enter the quanity: "))
-        ripeness = input("Enter the ripeness: [Unripe, Almost Ripe, Ripe, Overripe]: ")
+#input collected from user and validated in the models.py
+        question = "Enter the new vegetable's name: "
+
+        name = Vegetable.validate_name_input(question)
+        quanity = Vegetable.validate_quanity_input()
+        ripeness = Vegetable.validate_ripeness_input()
 
         print(f"\n{name} has been added successfully:")
 
@@ -122,19 +125,33 @@ class Cli():
 # Removes a vegetable from the DB based on name entered
     def remove_vegetable(self, garden_name):
         
-        self.clear_screen()
+        # self.clear_screen()
         print(f"Let's remove from {garden_name}...\n\n")
 
         Garden.query_all_vegs(garden_name)
 
-        name = input("Please enter the name of the vegetable you'd like to remove: ")
+        question = "Please enter the name of the vegetable you'd like to remove: "
+        name = Vegetable.validate_name_input(question)
+
+        # check_name_exist = session.query(Vegetable).filter(Vegetable.veg_name == name).filter(Vegetable.garden_id == Garden.vegetables).filter(Garden.name == garden_name).first()
+        # ipdb.set_trace() 
+        
+        check_name_exist = Vegetable.check_name_exist(name, garden_name)
+
+
+        if check_name_exist:
+            print("\nVegetable found...")
+        else:
+            print("\nThat vegetable doesn't exist, please try again\n")
+            self.remove_vegetable(garden_name)
+
 
         Vegetable.remove_veg(name)
 
         print(f"\n{name} has been removed")
-        print(f"\nHere is the updated list\n")
 
-        Garden.query_all_vegs(garden_name)
+        # print(f"\nHere is the updated list\n")
+        # Garden.query_all_vegs(garden_name)
 
         self.home_option()
 
