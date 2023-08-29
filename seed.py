@@ -3,9 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import random
 # from faker import Faker 
-import ipdb
+# import ipdb
+# ipdb.set_trace()
 
-# is this needed here?
+
 if __name__ == '__main__':
 
     engine = create_engine("sqlite:///main.db")
@@ -13,37 +14,15 @@ if __name__ == '__main__':
     session = Session()
 
 
-    print("Seeding DB...")
+    print("Deleting existing DB sample data...")
 
-    # Reset DB
+# Resetting DB data before seeding again
     session.query(Garden).delete()
     session.query(Vegetable).delete()
-    
-"""
-class Garden
-id: int PK
-name: str 
-location: str
-size: str
 
-class Vegtables
-id: int PK
-veg name: str
-quanity: int
-ripeness: str
-Garden_id: int FK
-"""
-
-
-
-# gardens = [
-#     Garden(name="Greenwood Garden", location="New Jersey", size="8,000 sqft"),
-#     Garden(name="West Side Community Garden", location="New York", size="6,000 sqft"),
-#     Garden(name="Duke Farms Community Garden", location="New Jersey", size="5,000 sqft")
-# ]
 
 #######################################################################################################################################
-
+# Creating the garden instances using dictionary
 gardens = {
     "Greenwood Garden": ["New Jersey", "8,000 sqft"],
     "West Side Community Garden": ["New York", "6,000 sqft"],
@@ -57,15 +36,6 @@ for garden_name, garden_values in gardens.items():
     garden_instance = Garden(name=garden_name, location=garden_location, size=garden_size)
     garden_instances.append(garden_instance)
 
-# ipdb.set_trace()
-
-
-
-
-
-
-
-
 #######################################################################################################################################
 
 session.bulk_save_objects(garden_instances)
@@ -73,14 +43,15 @@ session.bulk_save_objects(garden_instances)
 db_gardens = session.query(Garden).all()
 
 
-vegetable_names = ["Carrot", "Tomato", "Cabbage", "Spinach", "Broccoli", "Okra", "Eggplant", "Cauliflower"]
-vegetable_ripeness = ["Not Ripe", "Almost Ripe", "Ripe", "Over-Ripe"]
 
+vegetable_names = ["Carrot", "Broccoli", "Tomato", "Spinach", "Cucumber", "Bell Pepper", "Zucchini", "Lettuce", "Cabbage", "Onion", "Peas", "Radish"]
+vegetable_ripeness = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
 
+# Assigning vegetable data to each garden at random from list above
 for garden in db_gardens:
-    for _ in range(3):
+    for _ in range(4):
         random_veg_name = random.choice(vegetable_names)
-        random_quanity = random.randint(15,40)
+        random_quanity = random.randint(15,55)
         random_ripeness = random.choice(vegetable_ripeness)
         new_vegetable = Vegetable(veg_name=random_veg_name, quanity=random_quanity, ripeness=random_ripeness, garden_id = garden.id )
         session.add(new_vegetable)
@@ -88,11 +59,8 @@ for garden in db_gardens:
 
 session.commit()
 
-print("Done commiting.")
-print("Done seeding.")
+print("New data seeded successfully.")
+print("Seeding Complete")
 
 session.close()
-
-print("Done")
-
 # ipdb.set_trace()

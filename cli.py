@@ -108,7 +108,7 @@ class Cli():
 
         name = input("Enter the new vegetable's name: ")
         quanity = int(input("Enter the quanity: "))
-        ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
+        ripeness = input("Enter the ripeness: [Unripe, Almost Ripe, Ripe, Overripe]: ")
 
         print(f"\n{name} has been added successfully:")
 

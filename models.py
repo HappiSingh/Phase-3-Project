@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
 # import ipdb
 
+#Comment out Session code after esting is completed
 engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
 session = Session()
