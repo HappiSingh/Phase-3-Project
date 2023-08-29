@@ -48,6 +48,12 @@ class Garden(Base):
         headers = ["id", "name", "quanity", "ripeness"]
 
         print(tabulate(veg_list, headers=headers, tablefmt="grid"))
+
+
+    @classmethod
+    def get_garden_id(cls, garden_name):
+        selected_garden = session.query(cls).filter(cls.name == garden_name).first()
+        return selected_garden.id
         
 
 
