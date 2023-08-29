@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import ipdb
-
+# ipdb.set_trace()
 
 engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
@@ -133,7 +133,7 @@ class Cli():
 
         Garden.query_all_vegs(garden_name)
 
-        question = "Please enter the name of the vegetable you'd like to remove: "
+        question = "\nPlease enter the name of the vegetable you'd like to remove: "
         name = Vegetable.validate_name_input(question)
 
         check_name_exist = Vegetable.check_name_exist(name, garden_name)
@@ -158,14 +158,26 @@ class Cli():
 # Updates a vegetables quanity based on user selection
     def update_vegetable(self, garden_name):
 
-        self.clear_screen()
+        self.clear_screen(5)
         print(f"Let's update the quanity at {garden_name}...\n\n")
 
         Garden.query_all_vegs(garden_name)
 
-        name = input("Please enter the name of the vegetable you'd like to update: ")
-        new_qty = input(int(f"Please enter the new quanity of {name}: "))
+        # name = input("Please enter the name of the vegetable you'd like to update: ")
+        question = "\nPlease enter the name of the vegetable you'd like to update: "
+        name = Vegetable.validate_name_input(question)
 
+        check_name_exist = Vegetable.check_name_exist(name, garden_name)
+
+        if check_name_exist:
+            print("\nVegetable found...")
+        else:
+            print("\nThat vegetable doesn't exist, please try again\n")
+            self.update_vegetable(garden_name)
+        
+        new_qty = Vegetable.validate_quanity_input()
+        # new_qty = int(input(f"Please enter the new quanity of {name}: "))
+        print(new_qty)
         Vegetable.update_quanity(name, new_qty)
         
         print(f"\n{name}'s quanity has been updated to {new_qty}.\n")
@@ -206,7 +218,7 @@ class Cli():
 
 
 # To add room between menus, default set but override possible
-    def clear_screen(self, lines=40):
+    def clear_screen(self, lines=30):
         print("\n" * lines)
 
 

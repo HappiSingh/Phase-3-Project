@@ -6,8 +6,10 @@ from sqlalchemy.orm import sessionmaker
 from tabulate import tabulate
 
 
+import ipdb
+# ipdb.set_trace()
+
 Base = declarative_base()
-# import ipdb
 
 #Comment out Session code after esting is completed
 engine = create_engine("sqlite:///main.db")
@@ -162,6 +164,7 @@ class Vegetable(Base):
     @classmethod
     def check_name_exist(cls, name, garden_name):
         
-        check_exist = session.query(Vegetable).filter(Vegetable.veg_name == name).filter(Vegetable.garden_id == Garden.vegetables).filter(Garden.name == garden_name)
-
+        
+        check_exist = session.query(Vegetable).join(Garden).filter(Garden.name == garden_name).filter(Vegetable.veg_name == name).first()
+          
         return check_exist

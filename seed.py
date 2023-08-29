@@ -45,7 +45,7 @@ db_gardens = session.query(Garden).all()
 
 
 
-vegetable_names = ["Carrot", "Broccoli", "Tomato", "Spinach", "Cucumber", "Bell Pepper", "Zucchini", "Lettuce", "Cabbage", "Onion", "Peas", "Radish"]
+vegetable_names = ["Carrot", "Broccoli", "Tomato", "Spinach", "Cucumber", "Zucchini", "Lettuce", "Cabbage", "Onion", "Peas", "Radish"]
 vegetable_ripeness = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
 
 # Assigning vegetable data to each garden at random from list above
