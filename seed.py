@@ -33,6 +33,9 @@ quanity: int
 ripeness: str
 Garden_id: int FK
 """
+
+
+
 gardens = [
     Garden(name="Greenwood Garden", location="New Jersey", size="8,000 sqft"),
     Garden(name="West Side Community Garden", location="New York", size="6,000 sqft"),
@@ -66,4 +69,4 @@ print("Done seeding.")
 
 print("Done")
 
-ipdb.set_trace()
+# ipdb.set_trace()

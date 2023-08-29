@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 from simple_term_menu import TerminalMenu
 from models import Garden, Vegetable
-from sqlalchemy import create_engine, desc
-from sqlalchemy.orm import sessionmaker
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
 
-import ipdb
+# import ipdb
 # ipdb.set_trace() 
 
-engine = create_engine("sqlite:///main.db")
-Session = sessionmaker(bind=engine)
-session = Session()
+# engine = create_engine("sqlite:///main.db")
+# Session = sessionmaker(bind=engine)
+# session = Session()
 
 
 class Cli():
@@ -18,102 +18,74 @@ class Cli():
         pass
     
     def start(self):
+# Main menu        
         self.clear_screen(15)
 
         print("Welcome to my Garden Management App\n")
         print("What would you like to do?\n")
 
         options = [
-            "View all vegetables from Greenwood Garden", 
-            "View all vegetables from West Side Community Garden", 
-            "View all vegetables from Duke Farms Community Garden", 
-            "Add a vegetable to Greenwood Garden",
-            "Add a vegetable to West Side Community Garden",
-            "Add a vegetable to Duke Farms Community Garden",
-            "Remove a vegetable from Greenwood Garden",
-            "Remove a vegetable from West Side Community Garden",
-            "Remove a vegetable from Duke Farms Community Garden",
-            "Update the quanity from Greenwood Garden",
-            "Update the quanity from West Side Community Garden",
-            "Update the quanity from Duke Farms Community Garden",
+            "View all Vegetables",
+            "Add a vegetable",
+            "Remove a vegetable",
+            "Update the quanity",
             "Order by quanity",
             "Exit"
-            ]
+        ]
+
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
-#Viewing from DB
-        if options[menu_entry_index] == "View all vegetables from Greenwood Garden":
-            self.view_all_from_garden("Greenwood Garden")
 
-        elif options[menu_entry_index] == "View all vegetables from West Side Community Garden":
-            self.view_all_from_garden("West Side Community Garden")
+        if options[menu_entry_index] == "View all Vegetables":
+            self.choose_garden_menu("view_all_from_garden")       
 
-        elif options[menu_entry_index] == "View all vegetables from Duke Farms Community Garden":
-            self.view_all_from_garden("Duke Farms Community Garden")
+        elif options[menu_entry_index] == "Add a vegetable":
+            self.choose_garden_menu("add_vegetable") 
 
-#Adding to DB
-        elif options[menu_entry_index] == "Add a vegetable to Greenwood Garden":
-            self.add_vegetable("Greenwood Garden")
+        elif options[menu_entry_index] == "Remove a vegetable":
+            self.choose_garden_menu("remove_vegetable") 
 
-        elif options[menu_entry_index] == "Add a vegetable to West Side Community Garden":
-            self.add_vegetable("West Side Community Garden")
-
-        elif options[menu_entry_index] == "Add a vegetable to Duke Farms Community Garden":
-            self.add_vegetable("Duke Farms Community Garden")
-
-#Remove from DB
-        elif options[menu_entry_index] == "Remove a vegetable from Greenwood Garden":          
-            self.remove_vegetable("Greenwood Garden")
-
-        elif options[menu_entry_index] == "Remove a vegetable from West Side Community Garden":           
-            self.remove_vegetable("West Side Community Garden")
-
-        elif options[menu_entry_index] == "Remove a vegetable from Duke Farms Community Garden":          
-            self.remove_vegetable("Duke Farms Community Garden")
-
-#Update the DB
-        elif options[menu_entry_index] == "Update the quanity from Greenwood Garden":           
-            self.update_vegetable("Greenwood Garden")
-
-        elif options[menu_entry_index] == "Update the quanity from West Side Community Garden":           
-            self.update_vegetable("West Side Community Garden")
-
-        elif options[menu_entry_index] == "Update the quanity from Duke Farms Community Garden":
-            self.update_vegetable("Duke Farms Community Garden")
-
-# Order By quanity
+        elif options[menu_entry_index] == "Update the quanity":
+            self.choose_garden_menu("update_vegetable") 
 
         elif options[menu_entry_index] == "Order by quanity":
-            self.order_menu()           
-
-#Exit 
+            self.choose_garden_menu("order_by")        
         else:
             self.exit()
 
 
-# Order by menu: choose garden
-    def order_menu(self):
+# Choose the garden sub menu
+    def choose_garden_menu(self, arg_name):
 
         self.clear_screen()
-        print("you made it to order_menu_options")
+        print("Please choose a Garden")
   
         options = ["Greenwood Garden", "West Side Community Garden", "Duke Farms Community Garden", "Home"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
-        self.order_by(options[menu_entry_index])
+#Checking if Home was selected        
+        if options[menu_entry_index] == "Home":
+            self.start()
+        else:
+# Checking which method to run based on the chosen garden and main menu option    
+            if arg_name == "view_all_from_garden":
+                self.view_all_from_garden(options[menu_entry_index])
+            
+            elif arg_name == "add_vegetable":
+                self.add_vegetable((options[menu_entry_index]))
 
+            elif arg_name == "remove_vegetable":
+                self.remove_vegetable((options[menu_entry_index]))
 
-    def order_by(self, garden_name):
+            elif arg_name == "update_vegetable":
+                self.update_vegetable((options[menu_entry_index]))
 
-        self.clear_screen() 
-        print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
-
-        Vegetable.order_by_asc(garden_name)
-        
-        self.home_option()
-       
+            elif arg_name == "order_by":
+                self.order_by((options[menu_entry_index]))
+            else:
+                print("Oops, something went wrong")    
 
 
 # View all vegetables based on garden selected
@@ -134,11 +106,11 @@ class Cli():
         self.clear_screen()
         print(f"Let's add to {garden_name}...\n\n")
 
-        name = input("Enter the vegetable's name: ")
-        quanity = int(input("Enter the vegetables quanity: "))
+        name = input("Enter the new vegetable's name: ")
+        quanity = int(input("Enter the quanity: "))
         ripeness = input("Enter the ripeness: [Not Ripe, Almost Ripe, Ripe, Over-Ripe]: ")
 
-        print("\nVegetable has been added successfully:")
+        print(f"\n{name} has been added successfully:")
 
         selected_garden_id = Garden.get_garden_id(garden_name)
         Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
@@ -176,8 +148,8 @@ class Cli():
 
         Garden.query_all_vegs(garden_name)
 
-        name = input("Please enter the name of the vegetable you'd like update: ")
-        new_qty = input(f"Please enter the new quanity of {name}: ")
+        name = input("Please enter the name of the vegetable you'd like to update: ")
+        new_qty = input(int(f"Please enter the new quanity of {name}: "))
 
         Vegetable.update_quanity(name, new_qty)
         
@@ -187,11 +159,21 @@ class Cli():
         self.home_option()
 
 
+# Order by the quanity
+    def order_by(self, garden_name):
+
+        self.clear_screen() 
+        print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
+
+        Vegetable.order_by_asc(garden_name)
+        
+        self.home_option()
+       
 
 # Home option to return to the homepage
     def home_option(self):
 
-        self.clear_screen(2)
+        self.clear_screen(5)
 
         options = ["Home"]
         terminal_menu = TerminalMenu(options)
@@ -200,57 +182,6 @@ class Cli():
         if options[menu_entry_index] == "Home":
             self.start()
         
-
-
-
-    # def show_options(self, garden):
-    #     self.clear_screen()
-    #     print("you made it to show_options")
-        
-    #     print(garden)
-
-
-    #     print("Please choose from 2nd list\n")
-
-    #     options = ["View all vegetables", "Add a vegetable", "Remove a vegetable", "Update the quanity", "Home"]
-    #     terminal_menu = TerminalMenu(options)
-    #     menu_entry_index = terminal_menu.show()
-
-    #     if options[menu_entry_index] == "View all vegetables":
-    #         print("You selected View all vegetables")
-    #         self.view_all_vegetable(garden)
-            
-    #     elif options[menu_entry_index] == "Add a vegetable":
-    #         print("You selected Add a vegetable")
-            
-    #     elif options[menu_entry_index] == "Remove a vegetable":
-    #         print("You selected Remove a vegetable")
-
-    #     elif options[menu_entry_index] == "Update the quanity":
-    #         print("You selected Update the quanity")  
-
-    #     else:
-    #         self.start()
-
-
-
-
-
-
-
-
-
-
-
-
-    def filter_by_ripeness(self):
-        pass
-
-    def filter_by_quanity(self):
-        pass
-
-
-
 
 # exit option to close program
     def exit(self):
