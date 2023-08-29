@@ -36,13 +36,39 @@ Garden_id: int FK
 
 
 
-gardens = [
-    Garden(name="Greenwood Garden", location="New Jersey", size="8,000 sqft"),
-    Garden(name="West Side Community Garden", location="New York", size="6,000 sqft"),
-    Garden(name="Duke Farms Community Garden", location="New Jersey", size="5,000 sqft")
-]
+# gardens = [
+#     Garden(name="Greenwood Garden", location="New Jersey", size="8,000 sqft"),
+#     Garden(name="West Side Community Garden", location="New York", size="6,000 sqft"),
+#     Garden(name="Duke Farms Community Garden", location="New Jersey", size="5,000 sqft")
+# ]
 
-session.bulk_save_objects(gardens)
+#######################################################################################################################################
+
+gardens = {
+    "Greenwood Garden": ["New Jersey", "8,000 sqft"],
+    "West Side Community Garden": ["New York", "6,000 sqft"],
+    "Duke Farms Community Garden": ["New Jersey", "5,000 sqft"]
+    }
+
+garden_instances = []
+
+for garden_name, garden_values in gardens.items():
+    garden_location, garden_size = garden_values
+    garden_instance = Garden(name=garden_name, location=garden_location, size=garden_size)
+    garden_instances.append(garden_instance)
+
+# ipdb.set_trace()
+
+
+
+
+
+
+
+
+#######################################################################################################################################
+
+session.bulk_save_objects(garden_instances)
 
 db_gardens = session.query(Garden).all()
 
@@ -65,7 +91,7 @@ session.commit()
 print("Done commiting.")
 print("Done seeding.")
 
-# session.close()
+session.close()
 
 print("Done")
 
