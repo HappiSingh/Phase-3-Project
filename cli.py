@@ -113,10 +113,13 @@ class Cli():
         quanity = Vegetable.validate_quanity_input()
         ripeness = Vegetable.validate_ripeness_input()
 
-        print(f"\n{name} has been added successfully:")
+        print(f"\n\n{name} has been added successfully:")
 
         selected_garden_id = Garden.get_garden_id(garden_name)
         Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
+
+        print("\n\nHere is the fully updated list\n")
+        Garden.query_all_vegs(garden_name)
 
         self.home_option()
 
@@ -125,7 +128,7 @@ class Cli():
 # Removes a vegetable from the DB based on name entered
     def remove_vegetable(self, garden_name):
         
-        # self.clear_screen()
+        self.clear_screen(5)
         print(f"Let's remove from {garden_name}...\n\n")
 
         Garden.query_all_vegs(garden_name)
@@ -133,11 +136,7 @@ class Cli():
         question = "Please enter the name of the vegetable you'd like to remove: "
         name = Vegetable.validate_name_input(question)
 
-        # check_name_exist = session.query(Vegetable).filter(Vegetable.veg_name == name).filter(Vegetable.garden_id == Garden.vegetables).filter(Garden.name == garden_name).first()
-        # ipdb.set_trace() 
-        
         check_name_exist = Vegetable.check_name_exist(name, garden_name)
-
 
         if check_name_exist:
             print("\nVegetable found...")
@@ -145,13 +144,12 @@ class Cli():
             print("\nThat vegetable doesn't exist, please try again\n")
             self.remove_vegetable(garden_name)
 
-
         Vegetable.remove_veg(name)
 
         print(f"\n{name} has been removed")
 
-        # print(f"\nHere is the updated list\n")
-        # Garden.query_all_vegs(garden_name)
+        print(f"\nHere is the updated list\n")
+        Garden.query_all_vegs(garden_name)
 
         self.home_option()
 

@@ -126,11 +126,11 @@ class Vegetable(Base):
 
         ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
 
-        while ripeness not in ripeness_list:
+        while ripeness.title() not in ripeness_list:
             print("Not a valid option, Please choose from the list")
             ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
 
-        return ripeness
+        return ripeness.title()
     
 
     
@@ -153,7 +153,7 @@ class Vegetable(Base):
         while True:
             name = input(question)
             if name.isalpha():
-                return name  # Exit the loop if input is valid
+                return name.title()  # Exit the loop if input is valid
             else:
                 print("Invalid name. Please enter a name containing only letters.")
 
@@ -162,6 +162,6 @@ class Vegetable(Base):
     @classmethod
     def check_name_exist(cls, name, garden_name):
         
-        check_exist = session.query(cls).filter(cls.veg_name == name).filter(cls.garden_id == Garden.vegetables).filter(Garden.name == garden_name).first()
+        check_exist = session.query(Vegetable).filter(Vegetable.veg_name == name).filter(Vegetable.garden_id == Garden.vegetables).filter(Garden.name == garden_name)
 
         return check_exist
