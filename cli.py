@@ -163,7 +163,6 @@ class Cli():
 
         Garden.query_all_vegs(garden_name)
 
-        # name = input("Please enter the name of the vegetable you'd like to update: ")
         question = "\nPlease enter the name of the vegetable you'd like to update: "
         name = Vegetable.validate_name_input(question)
 
@@ -176,8 +175,7 @@ class Cli():
             self.update_vegetable(garden_name)
         
         new_qty = Vegetable.validate_quanity_input()
-        # new_qty = int(input(f"Please enter the new quanity of {name}: "))
-        print(new_qty)
+        
         Vegetable.update_quanity(name, new_qty)
         
         print(f"\n{name}'s quanity has been updated to {new_qty}.\n")
@@ -188,12 +186,12 @@ class Cli():
 
 # Order by the quanity
     def order_by(self, garden_name):
-
-        self.clear_screen() 
+        self.clear_screen(15) 
+        
         print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
 
         Vegetable.order_by_asc(garden_name)
-        
+
         self.home_option()
        
 

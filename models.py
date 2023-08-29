@@ -49,14 +49,6 @@ class Garden(Base):
 
         print(tabulate(veg_list, headers=headers, tablefmt="grid"))
         
-         
-
-# Query that finds the garden id given the name (garden selected)     
-    @classmethod
-    def get_garden_id(cls, garden_name):
-        selected_garden = session.query(cls).filter(cls.name == garden_name).first()
-        return selected_garden.id
-
 
 
 class Vegetable(Base):
@@ -110,16 +102,16 @@ class Vegetable(Base):
 # Order by quanity based on the selected garden: ASC
     @classmethod
     def order_by_asc(cls, garden_name):
-        g_id = Garden.get_garden_id(garden_name)
-        ordered_list = session.query(Vegetable).filter(Vegetable.garden_id == g_id).order_by(Vegetable.quanity).all()
+        
+        ordered_list = session.query(Vegetable).join(Garden).filter(Garden.name == garden_name).order_by(Vegetable.quanity).all()
+        veg_list = []
 
         for veg in ordered_list:
-                print(
-                    f"id={veg.id}\n"
-                    f"name= {veg.veg_name}\n"
-                    f"quanity= {veg.quanity}\n"
-                    f"ripeness= {veg.ripeness}\n"
-                )
+            veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
+        
+        headers = ["id", "name", "quanity", "ripeness"]
+
+        print(tabulate(veg_list, headers=headers, tablefmt="grid"))
 
     
     @classmethod
