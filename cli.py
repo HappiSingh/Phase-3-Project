@@ -152,7 +152,8 @@ class Cli():
             self.update_vegetable(garden_name)
         
         new_qty = Vegetable.validate_quanity_input()
-        Vegetable.update_quanity(name, new_qty)
+        g_id = Garden.get_garden_id(garden_name)
+        Vegetable.update_quanity(name, new_qty, g_id)
         
         print(f"\n{name}'s quanity has been updated to {new_qty}.\n")
         Garden.query_all_vegs(garden_name)

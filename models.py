@@ -93,8 +93,8 @@ class Vegetable(Base):
 
 # Query that updates the quanity of a vegetable
     @classmethod
-    def update_quanity(cls, name, new_qty):
-        session.query(cls).filter(cls.veg_name == name).update({'quanity': new_qty})
+    def update_quanity(cls, name, new_qty, g_id):
+        session.query(cls).filter(cls.garden_id == g_id).filter(cls.veg_name == name).update({'quanity': new_qty})
         session.commit()
 
 
