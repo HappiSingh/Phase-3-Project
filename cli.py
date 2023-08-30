@@ -124,7 +124,8 @@ class Cli():
             print("\nThat vegetable doesn't exist, please try again\n")
             self.remove_vegetable(garden_name)
 
-        Vegetable.remove_veg(name)
+        g_id = Garden.get_garden_id(garden_name)
+        Vegetable.remove_veg(name, g_id)
         print(f"\n{name} has been removed")
 
         print(f"\nHere is the updated list\n")

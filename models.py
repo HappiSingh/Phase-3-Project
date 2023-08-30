@@ -86,8 +86,8 @@ class Vegetable(Base):
     
 # Query that removes a selected vegetable
     @classmethod
-    def remove_veg(cls, name):
-        session.query(cls).filter(cls.veg_name == name).delete()
+    def remove_veg(cls, name, g_id):
+        session.query(cls).filter(cls.garden_id == g_id).filter(cls.veg_name == name).delete()
         session.commit()
 
 
