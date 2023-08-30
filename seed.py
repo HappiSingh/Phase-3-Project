@@ -3,10 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import random
-# from faker import Faker 
-# import ipdb
+import ipdb
 # ipdb.set_trace()
-
 
 if __name__ == '__main__':
 
@@ -14,13 +12,11 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
-
     print("Deleting existing DB sample data...")
 
 # Resetting DB data before seeding again
     session.query(Garden).delete()
     session.query(Vegetable).delete()
-
 
 #######################################################################################################################################
 # Creating the garden instances using dictionary
@@ -37,15 +33,14 @@ for garden_name, garden_values in gardens.items():
     garden_instance = Garden(name=garden_name, location=garden_location, size=garden_size)
     garden_instances.append(garden_instance)
 
-#######################################################################################################################################
-
 session.bulk_save_objects(garden_instances)
+
+#######################################################################################################################################
 
 db_gardens = session.query(Garden).all()
 
-
-
-vegetable_names = ["Carrot", "Broccoli", "Tomato", "Spinach", "Cucumber", "Zucchini", "Lettuce", "Cabbage", "Onion", "Peas", "Radish"]
+vegetable_names = ["Carrot", "Broccoli", "Tomato", "Spinach", "Cucumber", "Potato", "Pepper", 
+                   "Lettuce", "Cabbage", "Onion", "Radish", "Zucchini", "Eggplant", "Kale", "Beet"]
 vegetable_ripeness = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
 
 # Assigning vegetable data to each garden at random from list above
@@ -57,11 +52,9 @@ for garden in db_gardens:
         new_vegetable = Vegetable(veg_name=random_veg_name, quanity=random_quanity, ripeness=random_ripeness, garden_id = garden.id )
         session.add(new_vegetable)
 
-
 session.commit()
 
-print("New data seeded successfully.")
+print("New data seeded successfully")
 print("Seeding Complete")
 
 session.close()
-# ipdb.set_trace()

@@ -1,27 +1,26 @@
 #!/usr/bin/env python3
 from simple_term_menu import TerminalMenu
 from models import Garden, Vegetable
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import sessionmaker
 import ipdb
 # ipdb.set_trace()
 
-engine = create_engine("sqlite:///main.db")
-Session = sessionmaker(bind=engine)
-session = Session()
-
+# Session below only for testing purposes
+# engine = create_engine("sqlite:///main.db")
+# Session = sessionmaker(bind=engine)
+# session = Session()
 
 class Cli():
 
     def __init__(self):
         pass
     
-    def start(self):
 # Main menu        
+    def start(self):
         self.clear_screen(15)
 
-        print("Welcome to my Garden Management App\n")
+        print("Welcome to my Garden Management App")
         print("What would you like to do?\n")
 
         options = [
@@ -32,23 +31,17 @@ class Cli():
             "Order by quanity",
             "Exit"
         ]
-
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
-
         if options[menu_entry_index] == "View all Vegetables":
             self.choose_garden_menu("view_all_from_garden")       
-
         elif options[menu_entry_index] == "Add a vegetable":
             self.choose_garden_menu("add_vegetable") 
-
         elif options[menu_entry_index] == "Remove a vegetable":
             self.choose_garden_menu("remove_vegetable") 
-
         elif options[menu_entry_index] == "Update the quanity":
             self.choose_garden_menu("update_vegetable") 
-
         elif options[menu_entry_index] == "Order by quanity":
             self.choose_garden_menu("order_by")        
         else:
@@ -57,14 +50,12 @@ class Cli():
 
 # Choose the garden sub menu
     def choose_garden_menu(self, arg_name):
-
         self.clear_screen(15)
         print("Please choose a Garden")
   
         options = ["Greenwood Garden", "West Side Community Garden", "Duke Farms Community Garden", "Home"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
-
 #Checking if Home was selected        
         if options[menu_entry_index] == "Home":
             self.start()
@@ -72,16 +63,12 @@ class Cli():
 # Checking which method to run based on the chosen garden and main menu option    
             if arg_name == "view_all_from_garden":
                 self.view_all_from_garden(options[menu_entry_index])
-            
             elif arg_name == "add_vegetable":
                 self.add_vegetable((options[menu_entry_index]))
-
             elif arg_name == "remove_vegetable":
                 self.remove_vegetable((options[menu_entry_index]))
-
             elif arg_name == "update_vegetable":
                 self.update_vegetable((options[menu_entry_index]))
-
             elif arg_name == "order_by":
                 self.order_by((options[menu_entry_index]))
             else:
@@ -89,20 +76,16 @@ class Cli():
 
 
 # View all vegetables based on garden selected
-    def view_all_from_garden(self, garden_name):
-        
+    def view_all_from_garden(self, garden_name):       
         self.clear_screen(15) 
         print(f"Here is everything from {garden_name}...\n\n")
 
         Garden.query_all_vegs(garden_name)
-
         self.home_option()
-
 
 
 # Add a new vegetable to the DB  based on the user input
     def add_vegetable(self, garden_name):
-        
         self.clear_screen(15)
         print(f"Let's add to {garden_name}...\n\n")
 
@@ -124,10 +107,8 @@ class Cli():
         self.home_option()
 
 
-
 # Removes a vegetable from the DB based on name entered
     def remove_vegetable(self, garden_name):
-        
         self.clear_screen(5)
         print(f"Let's remove from {garden_name}...\n\n")
 
@@ -137,7 +118,6 @@ class Cli():
         name = Vegetable.validate_name_input(question)
 
         check_name_exist = Vegetable.check_name_exist(name, garden_name)
-
         if check_name_exist:
             print("\nVegetable found...")
         else:
@@ -145,7 +125,6 @@ class Cli():
             self.remove_vegetable(garden_name)
 
         Vegetable.remove_veg(name)
-
         print(f"\n{name} has been removed")
 
         print(f"\nHere is the updated list\n")
@@ -154,10 +133,8 @@ class Cli():
         self.home_option()
 
 
-
 # Updates a vegetables quanity based on user selection
     def update_vegetable(self, garden_name):
-
         self.clear_screen(5)
         print(f"Let's update the quanity at {garden_name}...\n\n")
 
@@ -167,7 +144,6 @@ class Cli():
         name = Vegetable.validate_name_input(question)
 
         check_name_exist = Vegetable.check_name_exist(name, garden_name)
-
         if check_name_exist:
             print("\nVegetable found...")
         else:
@@ -175,7 +151,6 @@ class Cli():
             self.update_vegetable(garden_name)
         
         new_qty = Vegetable.validate_quanity_input()
-        
         Vegetable.update_quanity(name, new_qty)
         
         print(f"\n{name}'s quanity has been updated to {new_qty}.\n")
@@ -191,13 +166,11 @@ class Cli():
         print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
 
         Vegetable.order_by_asc(garden_name)
-
         self.home_option()
        
 
 # Home option to return to the homepage
     def home_option(self):
-
         self.clear_screen(5)
 
         options = ["Home"]
@@ -207,18 +180,15 @@ class Cli():
         if options[menu_entry_index] == "Home":
             self.start()
         
-
 # exit option to close program
     def exit(self):
         print("\n" * 30)
         print("Thank you for visiting, Goodbye!")
         print("\n" * 20)
 
-
 # To add room between menus, default set but override possible
     def clear_screen(self, lines=30):
         print("\n" * lines)
-
 
 if __name__ == '__main__':
     app = Cli()

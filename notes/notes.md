@@ -1,4 +1,5 @@
 # Phase 3 Python Command Line Project Notes
+## Some helpful info and commands
 
 -------------------------------------------------------------------------------------
 # Migrations Notes

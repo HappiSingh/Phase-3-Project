@@ -1,21 +1,18 @@
 
-from sqlalchemy.orm import declarative_base, relationship, backref
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine
 from tabulate import tabulate
-
 
 import ipdb
 # ipdb.set_trace()
 
 Base = declarative_base()
 
-#Comment out Session code after esting is completed
 engine = create_engine("sqlite:///main.db")
 Session = sessionmaker(bind=engine)
 session = Session()
 
+#############################################################################################################
 class Garden(Base):
     __tablename__ = "gardens"
     
@@ -35,28 +32,26 @@ class Garden(Base):
            f"         size='{self.size}'>\n\n"
        )
     
-# Query that reads all the vegetables given the name (garden selected) 
+# Query reads all the vegetables given the garden selected
     @classmethod
     def query_all_vegs(cls, garden_name):
-
         selected_garden = session.query(cls).filter(cls.name == garden_name).first()
-        veg_list = []
 
+        veg_list = []
         for veg in selected_garden.vegetables:
             veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
         
         headers = ["id", "name", "quanity", "ripeness"]
-
         print(tabulate(veg_list, headers=headers, tablefmt="grid"))
 
-
+# Query gets the id of the slected garden
     @classmethod
     def get_garden_id(cls, garden_name):
         selected_garden = session.query(cls).filter(cls.name == garden_name).first()
         return selected_garden.id
         
 
-
+#############################################################################################################
 class Vegetable(Base):
     __tablename__ = "vegetables"
 
@@ -77,7 +72,7 @@ class Vegetable(Base):
        )
 
 
-# Query that adds a new vegetable
+# Query that adds new vegetable data to the selected garden
     @classmethod
     def add_veg(cls, name, quanity, ripeness, selected_garden_id):
         new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=selected_garden_id)
@@ -85,9 +80,7 @@ class Vegetable(Base):
         session.commit()
 
         veg_list = [new_veg.id, new_veg.veg_name, new_veg.quanity, new_veg.ripeness]
-        
         headers = ["id", "name", "quanity", "ripeness"]
-
         print(tabulate([veg_list], headers=headers, tablefmt="grid"))
     
     
@@ -101,38 +94,33 @@ class Vegetable(Base):
 # Query that updates the quanity of a vegetable
     @classmethod
     def update_quanity(cls, name, new_qty):
-        session.query(Vegetable).filter(Vegetable.veg_name == name).update({'quanity': new_qty})
+        session.query(cls).filter(cls.veg_name == name).update({'quanity': new_qty})
         session.commit()
 
 
 # Order by quanity based on the selected garden: ASC
     @classmethod
     def order_by_asc(cls, garden_name):
-        
-        ordered_list = session.query(Vegetable).join(Garden).filter(Garden.name == garden_name).order_by(Vegetable.quanity).all()
-        veg_list = []
+        ordered_list = session.query(cls).join(Garden).filter(Garden.name == garden_name).order_by(cls.quanity).all()
 
+        veg_list = []
         for veg in ordered_list:
             veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
         
         headers = ["id", "name", "quanity", "ripeness"]
-
         print(tabulate(veg_list, headers=headers, tablefmt="grid"))
 
     
     @classmethod
     def validate_ripeness_input(cls):
         ripeness_list = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
-
         ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
 
         while ripeness.title() not in ripeness_list:
             print("Not a valid option, Please choose from the list")
             ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
-
         return ripeness.title()
     
-
     
     @classmethod
     def validate_quanity_input(cls):
@@ -147,7 +135,6 @@ class Vegetable(Base):
                 print("Invalid input. Please enter a number.")
 
 
-    
     @classmethod
     def validate_name_input(cls, question):
         while True:
@@ -157,12 +144,8 @@ class Vegetable(Base):
             else:
                 print("Invalid name. Please enter a name containing only letters.")
 
-        
     
     @classmethod
     def check_name_exist(cls, name, garden_name):
-        
-        
-        check_exist = session.query(Vegetable).join(Garden).filter(Garden.name == garden_name).filter(Vegetable.veg_name == name).first()
-          
+        check_exist = session.query(cls).join(Garden).filter(Garden.name == garden_name).filter(cls.veg_name == name).first()
         return check_exist
