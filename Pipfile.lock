@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "88a531610a66173dda72d519b1c1c0be7f863bbfa5fb4347a2c41c54163c3c13"
+            "sha256": "11c116b86f97a564e522102d832407c7804f194031c67aea316d2c2994456f41"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -53,14 +53,6 @@
                 "sha256:19da64c18d2d851112f09c287f8d3dbbdf725ab0e569077efb6cdcbd3497c107"
             ],
             "version": "==1.2.0"
-        },
-        "faker": {
-            "hashes": [
-                "sha256:a6624d9574623bb27dfca33fff94581cd7b23b562901db8ad59acbde9a52543e",
-                "sha256:e2722fdf622cf24e974aaba15a3dee97a6f8b98d869bd827ff1af9c87695af46"
-            ],
-            "index": "pypi",
-            "version": "==19.3.1"
         },
         "greenlet": {
             "hashes": [
@@ -263,6 +255,13 @@
             ],
             "version": "==0.7.5"
         },
+        "prettycli": {
+            "hashes": [
+                "sha256:509e9cae6da299b43858205912c4b512da6786f9fa37c0fa64f253b667c9bad4"
+            ],
+            "index": "pypi",
+            "version": "==0.1"
+        },
         "prompt-toolkit": {
             "hashes": [
                 "sha256:04505ade687dc26dc4284b1ad19a83be2f2afe83e7a828ace0c72f3a1df72aac",
@@ -292,14 +291,6 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.16.1"
-        },
-        "python-dateutil": {
-            "hashes": [
-                "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86",
-                "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"
-            ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-            "version": "==2.8.2"
         },
         "simple-term-menu": {
             "hashes": [

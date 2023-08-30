@@ -1,9 +1,9 @@
 from models import Garden, Vegetable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
+from prettycli import green, yellow
 import random
-import ipdb
+# import ipdb
 # ipdb.set_trace()
 
 if __name__ == '__main__':
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    print("Deleting existing DB sample data...")
+    print(yellow("Deleting existing DB sample data..."))
 
 # Resetting DB data before seeding again
     session.query(Garden).delete()
@@ -54,7 +54,7 @@ for garden in db_gardens:
 
 session.commit()
 
-print("New data seeded successfully")
-print("Seeding Complete")
+print(green("New data seeded successfully"))
+print(green("Seeding Complete"))
 
 session.close()

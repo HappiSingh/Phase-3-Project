@@ -8,9 +8,10 @@ Welcome to my Garden Management CLI App, an essential tool for seamlessly intera
 
 ## Features
 + Database models with SQLAlchemy ORM and Alembic
++ Input validation
 + Python OOP back-end
-+ Use of a variety data structures (lists, dicts, etc)
-+ Use of external libraries (tabulate, simple_term_menu, etc)
++ Use of a variety data structures (lists, dicts and more)
++ Use of external libraries (tabulate, simple_term_menu, prettycli and more)
 
 
 ## Installation

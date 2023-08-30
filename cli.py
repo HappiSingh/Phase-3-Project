@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 from simple_term_menu import TerminalMenu
 from models import Garden, Vegetable
+from prettycli import red, yellow, green
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
-import ipdb
+
+# import ipdb
 # ipdb.set_trace()
 
 # Session below only for testing purposes
@@ -20,8 +22,8 @@ class Cli():
     def start(self):
         self.clear_screen(15)
 
-        print("Welcome to my Garden Management App")
-        print("What would you like to do?\n")
+        print(green("Welcome to my Garden Management App\n"))
+        print(green("What would you like to do?\n"))
 
         options = [
             "View all Vegetables",
@@ -51,7 +53,7 @@ class Cli():
 # Choose the garden sub menu
     def choose_garden_menu(self, arg_name):
         self.clear_screen(15)
-        print("Please choose a Garden")
+        print(green("Please choose the Garden"))
   
         options = ["Greenwood Garden", "West Side Community Garden", "Duke Farms Community Garden", "Home"]
         terminal_menu = TerminalMenu(options)
@@ -72,13 +74,13 @@ class Cli():
             elif arg_name == "order_by":
                 self.order_by((options[menu_entry_index]))
             else:
-                print("Oops, something went wrong")    
+                print(red("Oops, something went wrong")) 
 
 
 # View all vegetables based on garden selected
     def view_all_from_garden(self, garden_name):       
         self.clear_screen(15) 
-        print(f"Here is everything from {garden_name}...\n\n")
+        print(green(f"Here is everything from {garden_name}...\n\n"))
 
         Garden.query_all_vegs(garden_name)
         self.home_option()
@@ -87,7 +89,7 @@ class Cli():
 # Add a new vegetable to the DB  based on the user input
     def add_vegetable(self, garden_name):
         self.clear_screen(15)
-        print(f"Let's add to {garden_name}...\n\n")
+        print(green(f"Let's add to {garden_name}...\n\n"))
 
 #input collected from user and validated in the models.py
         question = "Enter the new vegetable's name: "
@@ -96,12 +98,12 @@ class Cli():
         quanity = Vegetable.validate_quanity_input()
         ripeness = Vegetable.validate_ripeness_input()
 
-        print(f"\n\n{name} has been added successfully:")
+        print(green(f"\n\n{name} has been added successfully:"))
 
         selected_garden_id = Garden.get_garden_id(garden_name)
         Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
 
-        print("\n\nHere is the fully updated list\n")
+        print(green("\n\nHere is the fully updated list\n"))
         Garden.query_all_vegs(garden_name)
 
         self.home_option()
@@ -110,7 +112,7 @@ class Cli():
 # Removes a vegetable from the DB based on name entered
     def remove_vegetable(self, garden_name):
         self.clear_screen(5)
-        print(f"Let's remove from {garden_name}...\n\n")
+        print(green(f"Let's remove from {garden_name}...\n\n"))
 
         Garden.query_all_vegs(garden_name)
 
@@ -119,16 +121,16 @@ class Cli():
 
         check_name_exist = Vegetable.check_name_exist(name, garden_name)
         if check_name_exist:
-            print("\nVegetable found...")
+            print(green("\nVegetable found..."))
         else:
-            print("\nThat vegetable doesn't exist, please try again\n")
+            print(yellow("\nThat vegetable doesn't exist, please try again\n"))
             self.remove_vegetable(garden_name)
 
         g_id = Garden.get_garden_id(garden_name)
         Vegetable.remove_veg(name, g_id)
-        print(f"\n{name} has been removed")
+        print(green(f"\n{name} has been removed"))
 
-        print(f"\nHere is the updated list\n")
+        print(green(f"\nHere is the updated list\n"))
         Garden.query_all_vegs(garden_name)
 
         self.home_option()
@@ -137,7 +139,7 @@ class Cli():
 # Updates a vegetables quanity based on user selection
     def update_vegetable(self, garden_name):
         self.clear_screen(5)
-        print(f"Let's update the quanity at {garden_name}...\n\n")
+        print(green(f"Let's update the quanity at {garden_name}...\n\n"))
 
         Garden.query_all_vegs(garden_name)
 
@@ -146,16 +148,16 @@ class Cli():
 
         check_name_exist = Vegetable.check_name_exist(name, garden_name)
         if check_name_exist:
-            print("\nVegetable found...")
+            print(green("\nVegetable found..."))
         else:
-            print("\nThat vegetable doesn't exist, please try again\n")
+            print(yellow("\nThat vegetable doesn't exist, please try again\n"))
             self.update_vegetable(garden_name)
         
         new_qty = Vegetable.validate_quanity_input()
         g_id = Garden.get_garden_id(garden_name)
         Vegetable.update_quanity(name, new_qty, g_id)
         
-        print(f"\n{name}'s quanity has been updated to {new_qty}.\n")
+        print(green(f"\n{name}'s quanity has been updated to {new_qty}.\n"))
         Garden.query_all_vegs(garden_name)
 
         self.home_option()
@@ -165,7 +167,7 @@ class Cli():
     def order_by(self, garden_name):
         self.clear_screen(15) 
         
-        print(f"Here is everything from {garden_name} ordered by quanity...\n\n")
+        print(green(f"Here is everything from {garden_name} ordered by quanity...\n\n"))
 
         Vegetable.order_by_asc(garden_name)
         self.home_option()
@@ -185,7 +187,7 @@ class Cli():
 # exit option to close program
     def exit(self):
         print("\n" * 30)
-        print("Thank you for visiting, Goodbye!")
+        print(green("Thank you for visiting, Goodbye!"))
         print("\n" * 20)
 
 # To add room between menus, default set but override possible

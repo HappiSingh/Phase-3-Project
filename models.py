@@ -2,8 +2,8 @@
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from sqlalchemy import Column, Integer, String, ForeignKey, create_engine
 from tabulate import tabulate
-
-import ipdb
+from prettycli import red, blue, yellow
+# import ipdb
 # ipdb.set_trace()
 
 Base = declarative_base()
@@ -41,8 +41,8 @@ class Garden(Base):
         for veg in selected_garden.vegetables:
             veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
         
-        headers = ["id", "name", "quanity", "ripeness"]
-        print(tabulate(veg_list, headers=headers, tablefmt="grid"))
+        headers = ["ID", "NAME", "QUANITY", "RIPENESS"]
+        print(blue(tabulate(veg_list, headers=headers, tablefmt="grid")))
 
 # Query gets the id of the slected garden
     @classmethod
@@ -80,8 +80,8 @@ class Vegetable(Base):
         session.commit()
 
         veg_list = [new_veg.id, new_veg.veg_name, new_veg.quanity, new_veg.ripeness]
-        headers = ["id", "name", "quanity", "ripeness"]
-        print(tabulate([veg_list], headers=headers, tablefmt="grid"))
+        headers = ["ID", "NAME", "QUANITY", "RIPENESS"]
+        print(blue(tabulate([veg_list], headers=headers, tablefmt="grid")))
     
     
 # Query that removes a selected vegetable
@@ -107,8 +107,8 @@ class Vegetable(Base):
         for veg in ordered_list:
             veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
         
-        headers = ["id", "name", "quanity", "ripeness"]
-        print(tabulate(veg_list, headers=headers, tablefmt="grid"))
+        headers = ["ID", "NAME", "QUANITY", "RIPENESS"]
+        print(blue(tabulate(veg_list, headers=headers, tablefmt="grid")))
 
     
     @classmethod
@@ -117,7 +117,7 @@ class Vegetable(Base):
         ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
 
         while ripeness.title() not in ripeness_list:
-            print("Not a valid option, Please choose from the list")
+            print(red("Not a valid option, Please choose from the list"))
             ripeness = input("Enter the ripeness: (Unripe, Almost Ripe, Ripe, Overripe): ")
         return ripeness.title()
     
@@ -130,9 +130,9 @@ class Vegetable(Base):
                 if 1 <= quanity <= 100:
                     return quanity  # Exit the loop if input is valid
                 else:
-                    print("Quanity must be at least 1 and no more than 100.")
+                    print(yellow("Quanity must be at least 1 and no more than 100."))
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print(red("Invalid input. Please enter a number."))
 
 
     @classmethod
@@ -142,7 +142,7 @@ class Vegetable(Base):
             if name.isalpha():
                 return name.title()  # Exit the loop if input is valid
             else:
-                print("Invalid name. Please enter a name containing only letters.")
+                print(red("Invalid name. Please enter a name containing only letters."))
 
     
     @classmethod
