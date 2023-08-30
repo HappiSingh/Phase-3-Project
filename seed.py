@@ -45,11 +45,13 @@ vegetable_ripeness = ["Unripe", "Almost Ripe", "Ripe", "Overripe"]
 
 # Assigning vegetable data to each garden at random from list above
 for garden in db_gardens:
+    available_vegetable_names = list(vegetable_names)  # Create a copy of the list
     for _ in range(4):
-        random_veg_name = random.choice(vegetable_names)
-        random_quanity = random.randint(15,85)
+        random_veg_name = random.choice(available_vegetable_names)
+        available_vegetable_names.remove(random_veg_name)  # Remove the chosen name
+        random_quantity = random.randint(15,85)
         random_ripeness = random.choice(vegetable_ripeness)
-        new_vegetable = Vegetable(veg_name=random_veg_name, quanity=random_quanity, ripeness=random_ripeness, garden_id = garden.id )
+        new_vegetable = Vegetable(veg_name=random_veg_name, quantity=random_quantity, ripeness=random_ripeness, garden_id = garden.id )
         session.add(new_vegetable)
 
 session.commit()

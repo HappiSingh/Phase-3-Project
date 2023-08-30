@@ -29,8 +29,8 @@ class Cli():
             "View all Vegetables",
             "Add a vegetable",
             "Remove a vegetable",
-            "Update the quanity",
-            "Order by quanity",
+            "Update the quantity",
+            "Order by quantity",
             "Exit"
         ]
         terminal_menu = TerminalMenu(options)
@@ -42,9 +42,9 @@ class Cli():
             self.choose_garden_menu("add_vegetable") 
         elif options[menu_entry_index] == "Remove a vegetable":
             self.choose_garden_menu("remove_vegetable") 
-        elif options[menu_entry_index] == "Update the quanity":
+        elif options[menu_entry_index] == "Update the quantity":
             self.choose_garden_menu("update_vegetable") 
-        elif options[menu_entry_index] == "Order by quanity":
+        elif options[menu_entry_index] == "Order by quantity":
             self.choose_garden_menu("order_by")        
         else:
             self.exit()
@@ -95,13 +95,13 @@ class Cli():
         question = "Enter the new vegetable's name: "
 
         name = Vegetable.validate_name_input(question)
-        quanity = Vegetable.validate_quanity_input()
+        quantity = Vegetable.validate_quantity_input()
         ripeness = Vegetable.validate_ripeness_input()
 
         print(green(f"\n\n{name} has been added successfully:"))
 
         selected_garden_id = Garden.get_garden_id(garden_name)
-        Vegetable.add_veg(name, quanity, ripeness, selected_garden_id)
+        Vegetable.add_veg(name, quantity, ripeness, selected_garden_id)
 
         print(green("\n\nHere is the fully updated list\n"))
         Garden.query_all_vegs(garden_name)
@@ -136,10 +136,10 @@ class Cli():
         self.home_option()
 
 
-# Updates a vegetables quanity based on user selection
+# Updates a vegetables quantity based on user selection
     def update_vegetable(self, garden_name):
         self.clear_screen(5)
-        print(green(f"Let's update the quanity at {garden_name}...\n\n"))
+        print(green(f"Let's update the quantity at {garden_name}...\n\n"))
 
         Garden.query_all_vegs(garden_name)
 
@@ -153,21 +153,21 @@ class Cli():
             print(yellow("\nThat vegetable doesn't exist, please try again\n"))
             self.update_vegetable(garden_name)
         
-        new_qty = Vegetable.validate_quanity_input()
+        new_qty = Vegetable.validate_quantity_input()
         g_id = Garden.get_garden_id(garden_name)
-        Vegetable.update_quanity(name, new_qty, g_id)
+        Vegetable.update_quantity(name, new_qty, g_id)
         
-        print(green(f"\n{name}'s quanity has been updated to {new_qty}.\n"))
+        print(green(f"\n{name}'s quantity has been updated to {new_qty}.\n"))
         Garden.query_all_vegs(garden_name)
 
         self.home_option()
 
 
-# Order by the quanity
+# Order by the quantity
     def order_by(self, garden_name):
         self.clear_screen(15) 
         
-        print(green(f"Here is everything from {garden_name} ordered by quanity...\n\n"))
+        print(green(f"Here is everything from {garden_name} ordered by quantity...\n\n"))
 
         Vegetable.order_by_asc(garden_name)
         self.home_option()

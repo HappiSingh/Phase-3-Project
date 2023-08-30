@@ -39,9 +39,11 @@ class Garden(Base):
 
         veg_list = []
         for veg in selected_garden.vegetables:
-            veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
+            veg_list.append([veg.id, veg.veg_name, veg.quantity, veg.ripeness])
+
         
-        headers = ["ID", "NAME", "QUANITY", "RIPENESS"]
+        
+        headers = ["ID", "NAME", "QUANTITY", "RIPENESS"]
         print(blue(tabulate(veg_list, headers=headers, tablefmt="grid")))
 
 # Query gets the id of the slected garden
@@ -57,7 +59,7 @@ class Vegetable(Base):
 
     id = Column(Integer, primary_key=True)
     veg_name = Column(String, nullable=False)
-    quanity = Column(Integer, nullable=False)
+    quantity = Column(Integer, nullable=False)
     ripeness = Column(String, nullable=False)
 
     garden_id = Column(Integer, ForeignKey("gardens.id"))
@@ -67,20 +69,20 @@ class Vegetable(Base):
        return (
            f"<Vegetable: id={self.id},\n"
            f"            veg_name='{self.veg_name}',\n"
-           f"            quanity='{self.quanity}',\n"
+           f"            quantity='{self.quantity}',\n"
            f"            ripeness='{self.ripeness}'>\n\n"
        )
 
 
 # Query that adds new vegetable data to the selected garden
     @classmethod
-    def add_veg(cls, name, quanity, ripeness, selected_garden_id):
-        new_veg = Vegetable(veg_name=name, quanity=quanity, ripeness=ripeness, garden_id=selected_garden_id)
+    def add_veg(cls, name, quantity, ripeness, selected_garden_id):
+        new_veg = Vegetable(veg_name=name, quantity=quantity, ripeness=ripeness, garden_id=selected_garden_id)
         session.add(new_veg)
         session.commit()
 
-        veg_list = [new_veg.id, new_veg.veg_name, new_veg.quanity, new_veg.ripeness]
-        headers = ["ID", "NAME", "QUANITY", "RIPENESS"]
+        veg_list = [new_veg.id, new_veg.veg_name, new_veg.quantity, new_veg.ripeness]
+        headers = ["ID", "NAME", "QUANTITY", "RIPENESS"]
         print(blue(tabulate([veg_list], headers=headers, tablefmt="grid")))
     
     
@@ -91,23 +93,23 @@ class Vegetable(Base):
         session.commit()
 
 
-# Query that updates the quanity of a vegetable
+# Query that updates the quantity of a vegetable
     @classmethod
-    def update_quanity(cls, name, new_qty, g_id):
-        session.query(cls).filter(cls.garden_id == g_id).filter(cls.veg_name == name).update({'quanity': new_qty})
+    def update_quantity(cls, name, new_qty, g_id):
+        session.query(cls).filter(cls.garden_id == g_id).filter(cls.veg_name == name).update({'quantity': new_qty})
         session.commit()
 
 
-# Order by quanity based on the selected garden: ASC
+# Order by quantity based on the selected garden: ASC
     @classmethod
     def order_by_asc(cls, garden_name):
-        ordered_list = session.query(cls).join(Garden).filter(Garden.name == garden_name).order_by(cls.quanity).all()
+        ordered_list = session.query(cls).join(Garden).filter(Garden.name == garden_name).order_by(cls.quantity).all()
 
         veg_list = []
         for veg in ordered_list:
-            veg_list.append([veg.id, veg.veg_name, veg.quanity, veg.ripeness])
+            veg_list.append([veg.id, veg.veg_name, veg.quantity, veg.ripeness])
         
-        headers = ["ID", "NAME", "QUANITY", "RIPENESS"]
+        headers = ["ID", "NAME", "QUANTITY", "RIPENESS"]
         print(blue(tabulate(veg_list, headers=headers, tablefmt="grid")))
 
     
@@ -123,14 +125,14 @@ class Vegetable(Base):
     
     
     @classmethod
-    def validate_quanity_input(cls):
+    def validate_quantity_input(cls):
         while True:
             try:
-                quanity = int(input("Enter the quanity (between 1 and 100): "))
-                if 1 <= quanity <= 100:
-                    return quanity  # Exit the loop if input is valid
+                quantity = int(input("Enter the quantity (between 1 and 100): "))
+                if 1 <= quantity <= 100:
+                    return quantity  # Exit the loop if input is valid
                 else:
-                    print(yellow("Quanity must be at least 1 and no more than 100."))
+                    print(yellow("quantity must be at least 1 and no more than 100."))
             except ValueError:
                 print(red("Invalid input. Please enter a number."))
 
